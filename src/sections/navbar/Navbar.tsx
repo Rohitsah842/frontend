@@ -41,14 +41,14 @@ const Navbar = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    // const handleCloseNavMenu = () => {
+    //     setAnchorElNav(null);
+    // };
 
     const handleCloseUserMenu = (pathLink: string) => {
         setAnchorElUser(null);
         console.log(pathLink);
-        
+
     };
 
     return (
@@ -80,51 +80,51 @@ const Navbar = () => {
                             ))}
                         </Box>}
 
-                        <Box sx={{ display: "flex",  marginLeft: 'auto', alignItems: 'center' }}>
-                            <SearchNavBar /> 
-                            {!isLogin ?<NavLink  path="/login" title="Login" />: <>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                                </IconButton>
-                            </Tooltip>
+                        <Box sx={{ display: "flex", marginLeft: 'auto', alignItems: 'center' }}>
+                            <SearchNavBar />
+                            {!isLogin ? <NavLink path="/login" title="Login" /> : <>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    </IconButton>
+                                </Tooltip>
 
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+
                                     {profileLinks.map((profLink) => (
                                         <MenuItem key={profLink.title} onClick={() => handleCloseUserMenu(profLink.path)}>
-                                        <Typography
-                                         textAlign="center"
-                                         component="a"
-                                         href={profLink.path}
-                                         sx={{
-                                            color: 'inherit',
-                                            textDecoration: 'none',
-                                        }}
+                                            <Typography
+                                                textAlign="center"
+                                                component="a"
+                                                href={profLink.path}
+                                                sx={{
+                                                    color: 'inherit',
+                                                    textDecoration: 'none',
+                                                }}
                                             >
-                                            {profLink.title}</Typography>
-                                      </MenuItem>
-                                    // <NavLink key={profLink.title} path={profLink.path} title={profLink.title}/>
+                                                {profLink.title}</Typography>
+                                        </MenuItem>
+                                        // <NavLink key={profLink.title} path={profLink.path} title={profLink.title}/>
                                     ))}
-                                
 
 
-                            </Menu>
+
+                                </Menu>
                             </>}
                         </Box>
                     </Toolbar>
