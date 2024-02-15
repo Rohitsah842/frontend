@@ -1,8 +1,11 @@
-import Image from "next/image";
+import { ReactElement } from "react";
 
-export default function Home() {
+
+const Home = (): ReactElement => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main >
+      <h2>Home Page</h2>
     </main>
   );
 }
+export default Home;
