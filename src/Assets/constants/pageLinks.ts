@@ -14,7 +14,7 @@ export const navLinks: PageLink[]=[
     },
     {
         title:"Calculators",
-        path:"/calculators"
+        path:""
     }
 
 
@@ -38,4 +38,19 @@ export const profileLinks: PageLink[]=[
         path:"/logout"
     }
 
+]
+
+export const calculatorsLinks:PageLink[]=[
+    {
+        title:"SIP",
+        path:"/sip"
+    },
+    {
+        title:"Lumpsum",
+        path:"/lumpsum"
+    },
+    {
+        title:"Mutual Fund Returns",
+        path:"/mutualfundreturn"
+    }
 ]

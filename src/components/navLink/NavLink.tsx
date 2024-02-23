@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import { usePathname } from 'next/navigation';
 import { ReactElement } from 'react';
+import Typography from '@mui/material/Typography'
 
 const NavLink = (props: PageLink): ReactElement => {
     const theme = useTheme();
@@ -17,14 +18,19 @@ const NavLink = (props: PageLink): ReactElement => {
     return (
         <Link
             href={props.path}
-            style={{ color: `${theme.palette.text.secondary}`, textDecoration: "none"}}
+            style={{ color: `${theme.palette.text.primary}`, textDecoration: "none" }}
+            onClick={props.onClickHandler}
+            onMouseMove={props.onMouseMoveHandler}
+            onMouseLeave={props.onMouseOutHandler}
         >
             <MenuItem >
                 <ListItemText className={`${pathName === props.path && styles.active}`}>
-                    {props.title}
+                    <Typography variant="body1" sx={{ display: 'flex' }}>
+                        {props.title}  {props.icon && props.icon}
+                    </Typography>
                 </ListItemText>
-            </MenuItem> 
-            
+            </MenuItem>
+
         </Link>
     );
 }

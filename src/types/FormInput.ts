@@ -1,11 +1,13 @@
 
 export interface FormInput{
-    id:string
-    inputType:string
-    placeholder: string
+    inputType?:string
+    placeholder?: string
     title:string
-    value:string
-    onChangeHandler?:()=>void
-
+    value?:string
+    onChangeHandler?:(event: React.ChangeEvent<HTMLInputElement>)=>void
+    endAdornment?:React.ReactNode
+    inputName: string;
+    touch?:boolean
+    errorMessage?: string
 
 }
