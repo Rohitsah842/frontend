@@ -20,8 +20,6 @@ const NavLink = (props: PageLink): ReactElement => {
             href={props.path}
             style={{ color: `${theme.palette.text.primary}`, textDecoration: "none" }}
             onClick={props.onClickHandler}
-            onMouseMove={props.onMouseMoveHandler}
-            onMouseLeave={props.onMouseOutHandler}
         >
             <MenuItem >
                 <ListItemText className={`${pathName === props.path && styles.active}`}>

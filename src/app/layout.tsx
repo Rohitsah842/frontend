@@ -12,15 +12,6 @@ const darkTheme = createTheme({
   },
 });
 
-// const theme = createTheme({
-//   components: {
-//     MuiUseMediaQuery: {
-//       defaultProps: {
-//         noSsr: true,
-//       },
-//     },
-//   },
-// });
 
 
 export default function RootLayout({

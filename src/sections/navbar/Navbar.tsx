@@ -1,5 +1,4 @@
 "use client"
-import { ReactElement } from "react";
 import * as React from 'react';
 
 import AppBar from '@mui/material/AppBar';
@@ -16,19 +15,19 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Paper from '@mui/material/Paper';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { calculatorsLinks, navLinks, profileLinks } from "@/Assets/constants/pageLinks"
 import { SIDE_NAV_WIDTH } from "@/Assets/constants";
 import NavLink from "@/components/navLink/NavLink";
 import SearchNavBar from "@/components/searchNavBar/SearchNavBar";
-import { noSSR } from "next/dynamic";
-import { boolean } from "yup";
+
 
 const Navbar = () => {
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
+    const [openDropdown, setOpenDropdown] = React.useState<null | HTMLElement>(null);
     const [isSideMenuOpen, setIsSideMenuOpen] = React.useState<boolean>(false);
     const [isLogin, setIsLogin] = React.useState<boolean>(true);
 
@@ -39,16 +38,19 @@ const Navbar = () => {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
+    const handleOpenDropDown = (event: React.MouseEvent<HTMLElement>) => {
+        setOpenDropdown(event.currentTarget);
+    };
 
-    // const handleCloseNavMenu = () => {
-    //     setAnchorElNav(null);
-    // };
+
+    const handleCloseDropDown = () => {
+        setOpenDropdown(null);
+    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
 
     };
-    console.log(Boolean(anchorElUser));
 
 
     return (
@@ -81,14 +83,15 @@ const Navbar = () => {
                                     } else {
                                         return (
                                             <>
-                                                <NavLink key={link.title} path={link.path} title={link.title} icon={<ArrowDropDownIcon />} onMouseMoveHandler={() => setOpenDropdown(true)} onMouseOutHandler={() => console.log("hello")} />
-
+                                                <IconButton onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
+                                                    Calculators<ArrowDropDownIcon />
+                                                </IconButton>
                                                 <Menu
-                                                    sx={{ mt: '20px', position: 'absolute', zIndex: '999' }}
-                                                    id="menu-appbar"
-                                                    anchorEl={anchorElUser}
+                                                    sx={{ mt: '45px' }}
+                                                    id="dropDown-bar"
+                                                    anchorEl={openDropdown}
                                                     anchorOrigin={{
-                                                        vertical: 'bottom',
+                                                        vertical: 'top',
                                                         horizontal: 'right',
                                                     }}
                                                     keepMounted
@@ -96,14 +99,12 @@ const Navbar = () => {
                                                         vertical: 'top',
                                                         horizontal: 'right',
                                                     }}
-
-
-                                                    open={openDropdown}
-                                                    onClose={handleCloseUserMenu}
+                                                    transitionDuration="auto"
+                                                    open={Boolean(openDropdown)}
+                                                    onClose={handleCloseDropDown}
                                                 >
-
                                                     {calculatorsLinks.map((profLink) => (
-                                                        <MenuItem key={profLink.title} onClick={() => handleCloseUserMenu()}>
+                                                        <MenuItem key={profLink.title} onClick={() => handleCloseDropDown()}>
                                                             <Typography
                                                                 textAlign="center"
                                                                 component="a"
@@ -136,15 +137,15 @@ const Navbar = () => {
                                     sx={{ mt: '45px' }}
                                     id="menu-appbar"
                                     anchorEl={anchorElUser}
-                                    // anchorOrigin={{
-                                    //     vertical: 'top',
-                                    //     horizontal: 'right',
-                                    // }}
-                                    // keepMounted
-                                    // transformOrigin={{
-                                    //     vertical: 'button',
-                                    //     horizontal: 'right',
-                                    // }}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
                                     transitionDuration="auto"
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
@@ -171,19 +172,63 @@ const Navbar = () => {
                 </Container>
             </AppBar>
             {isMobile &&
-                <Box>
+                <Box  >
                     <SwipeableDrawer
                         anchor="left"
                         open={isSideMenuOpen}
                         onClose={() => setIsSideMenuOpen(false)}
                         onOpen={() => setIsSideMenuOpen(true)}
-                        sx={{ width: SIDE_NAV_WIDTH, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: SIDE_NAV_WIDTH }, }}
+                        sx={{ width: SIDE_NAV_WIDTH, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: SIDE_NAV_WIDTH } }}
                     >
-                        {navLinks.map((link) => (
+                        <Paper elevation={0} sx={{ alignItems: "flex-start", padding: '25px', height: '100%' }}>
+                            {navLinks.map((link) => {
+                                if (link.title !== 'Calculators') {
+                                    return <NavLink key={link.title} path={link.path} title={link.title} onClickHandler={() => setIsSideMenuOpen(false)} />
+                                } else {
+                                    return (
+                                        <>
+                                            <IconButton onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
+                                                Calculators<ArrowDropDownIcon />
+                                            </IconButton>
+                                            <Menu
+                                                sx={{ mt: '45px' }}
+                                                id="dropDown-bar"
+                                                anchorEl={openDropdown}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                keepMounted
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                transitionDuration="auto"
+                                                open={Boolean(openDropdown)}
+                                                onClose={handleCloseDropDown}
+                                            >
 
-                            <NavLink key={link.title} path={link.path} title={link.title} onClickHandler={() => setIsSideMenuOpen(false)} />
-                        ))}
+                                                {calculatorsLinks.map((profLink) => (
+                                                    <MenuItem key={profLink.title} onClick={() => handleCloseDropDown()}>
+                                                        <Typography
+                                                            textAlign="center"
+                                                            component="a"
+                                                            href={profLink.path}
+                                                            sx={{
+                                                                color: 'inherit',
+                                                                textDecoration: 'none',
+                                                            }}
+                                                        >
+                                                            {profLink.title}</Typography>
+                                                    </MenuItem>
+                                                ))}
+                                            </Menu>
+                                        </>)
+                                }
+                            })}
+                        </Paper>
                     </SwipeableDrawer>
+
                 </Box>
 
             }

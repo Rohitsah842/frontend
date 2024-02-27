@@ -6,16 +6,10 @@ import { useFormikContext } from 'formik'
 import { get } from 'lodash'
 
 const InputField = (props: FormInput): ReactElement => {
-    const { values, setFieldValue, handleChange, handleBlur, touched, errors, ...remainingprops } = useFormikContext<{ email: string, passowrd: string }>()
-    // console.log(remainingprops, values)
+    const { values, handleChange, handleBlur, touched, errors } = useFormikContext<{ email: string, passowrd: string }>()
+
     return (
         <FormControl>
-            {/* <InputLabel
-                variant='filled'
-                htmlFor={props.title}
-            >
-                {props.title}
-            </InputLabel> */}
             <TextField
                 required
                 error={get(errors, `${props.inputName}`) && get(touched, `${props.inputName}`)}

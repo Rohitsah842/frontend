@@ -4,7 +4,7 @@ export interface FormInput{
     placeholder?: string
     title:string
     value?:string
-    onChangeHandler?:(event: React.ChangeEvent<HTMLInputElement>)=>void
+    onChangeHandler?:()=>void
     endAdornment?:React.ReactNode
     inputName: string;
     touch?:boolean

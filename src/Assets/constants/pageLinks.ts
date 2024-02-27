@@ -43,14 +43,14 @@ export const profileLinks: PageLink[]=[
 export const calculatorsLinks:PageLink[]=[
     {
         title:"SIP",
-        path:"/sip"
+        path:"/calculators/sip"
     },
     {
         title:"Lumpsum",
-        path:"/lumpsum"
+        path:"/calculators/lumpsum"
     },
     {
-        title:"Mutual Fund Returns",
-        path:"/mutualfundreturn"
+        title:"MF Returns",
+        path:"/calculators/mutualfundreturn"
     }
 ]
