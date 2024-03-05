@@ -6,7 +6,7 @@ export interface InputSliderprops{
     value: number
     onChangeHandle:(event:React.ChangeEvent<HTMLInputElement>)=>void
     onChangeSliderHandler?: (event: React.ChangeEvent<HTMLInputElement>)=> void
-    endormentType?:string 
+    isStartAdornment?:boolean 
     endormentIcon?: string
     name:string
     title?: string

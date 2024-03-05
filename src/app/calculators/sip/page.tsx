@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Container, Grid, Typography, Paper, Stack, Card } from "@mui/material"
+import { Container, Grid, Typography, Paper, Stack } from "@mui/material"
 import InputSlider from '@/components/InputSlider'
 import DonoutChart from '@/components/DonoutChart'
 import { sipInterestAmt } from '@/utils/sipInterestCal'
@@ -46,7 +46,7 @@ const SIPCalculator = () => {
             setMaturityAmount(lumpsumAmmount(initialInvestment.amount, initialInvestment.interest, initialInvestment.time));
             setToalPrinciple(initialInvestment.amount * get(investmenttypeData, `${investmentType}.noOfPayment`, 0))
         }
-        console.log(lineChartdata);
+
 
     }, [initialInvestment, investmentType])
 
@@ -76,9 +76,9 @@ const SIPCalculator = () => {
                     <Grid item xs={12} md={7} sx={{ display: { xs: 'block', md: 'flex' } }}>
                         <Paper elevation={3} sx={{ width: { xs: '100%', md: '60%' } }}>
                             <Stack spacing={4}>
-                                <InputSlider title={get(investmenttypeData, `${investmentType}.title`)} name='amount' min={500} max={100000} stepSize={50} endormentIcon='₹' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.amount} />
-                                <InputSlider title='Expected return rate (p.a)' name='interest' min={1} max={30} stepSize={0.1} endormentIcon='%' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.interest} />
-                                <InputSlider title='Time Period' name='time' min={1} max={40} stepSize={1} endormentIcon='Yr.' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.time} />
+                                <InputSlider isStartAdornment={true} title={get(investmenttypeData, `${investmentType}.title`)} name='amount' min={500} max={100000} stepSize={50} endormentIcon='₹' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.amount} />
+                                <InputSlider isStartAdornment={false} title='Expected return rate (p.a)' name='interest' min={1} max={30} stepSize={0.1} endormentIcon='%' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.interest} />
+                                <InputSlider isStartAdornment={false} title='Time Period' name='time' min={1} max={40} stepSize={1} endormentIcon='Yr.' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.time} />
                             </Stack>
                             <Stack spacing={4} sx={{ mt: '3rem' }} >
                                 <FlexWrapper>

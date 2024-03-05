@@ -1,4 +1,4 @@
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import  { SelectChangeEvent } from '@mui/material/Select';
 
 export interface dropDownTypes{
     value: string

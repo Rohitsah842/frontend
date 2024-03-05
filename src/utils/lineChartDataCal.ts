@@ -25,9 +25,9 @@ const lineChartData: {showMark: boolean, data:number[], label:string}[]=[]
     //            interestAmount.push(value-(p*i*n))
     //         }
     //     }
-    lineChartData.push({ showMark: true, data:principleAmount, label:'Principle '});
-    lineChartData.push({ showMark: true, data:interestAmount, label:'Interest'});
-    lineChartData.push({ showMark: true, data:totalAmount, label:'Total return'});
+    lineChartData.push({ showMark: false, data:principleAmount, label:'Principle '});
+    lineChartData.push({ showMark: false, data:interestAmount, label:'Interest'});
+    lineChartData.push({ showMark: false, data:totalAmount, label:'Total return'});
 
     return lineChartData; 
 
