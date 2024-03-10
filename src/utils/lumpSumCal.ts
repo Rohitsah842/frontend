@@ -1,5 +1,5 @@
-export const lumpsumAmmount=(p :number, i: number, t: number)=>{
+export const lumpsumAmmount=(principle :number, interest: number, time: number)=>{
 
-    return Math.round(p*Math.pow((1+i/100), t))
+    return Math.round(principle*Math.pow((1+interest/100), time))
 
 }

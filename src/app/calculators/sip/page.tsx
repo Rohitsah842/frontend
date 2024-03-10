@@ -97,7 +97,7 @@ const SIPCalculator = () => {
 
                         </Paper>
                         <Paper elevation={3} sx={{ width: { xs: '100%', md: '35%' } }}>
-                            <DonoutChart principalAmt={toalPrinciple} totalAmount={maturityAmt} />
+                            <DonoutChart initialAmt={toalPrinciple} totalAmount={maturityAmt} title1='Principle' title2='Total Amount' />
                         </Paper>
 
                     </Grid>

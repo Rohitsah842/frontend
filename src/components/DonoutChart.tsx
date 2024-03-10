@@ -1,11 +1,11 @@
 import React from 'react'
 import { PieChart } from '@mui/x-charts/PieChart';
 
-const DonoutChart: React.FC<{ principalAmt: number, totalAmount: number }> = (props) => {
+const DonoutChart: React.FC<{ initialAmt: number, totalAmount: number, title1: string, title2: string }> = (props) => {
     const data = [
-        { label: 'Principal', value: props.principalAmt },
-        { label: 'Interest', value: (props.totalAmount - props.principalAmt) },
-        { label: 'Maturity', value: props.totalAmount }
+        { label: props.title1, value: props.initialAmt, color: 'rgba(184, 0, 216, 1)' },
+        { label: 'Interest', value: (props.totalAmount - props.initialAmt), color: 'rgba(96, 0, 155, 1)' },
+        // { label: props.title2, value: props.totalAmount }
     ]
 
     return (

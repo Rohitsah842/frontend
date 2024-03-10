@@ -76,14 +76,16 @@ const Navbar = () => {
                             >
                                 LOGO
                             </Typography>
-                            {!isMobile && <Box sx={{ flexGrow: 1, display: 'flex' }}>
+
+                            {!isMobile && <Box key={'desktop'} sx={{ flexGrow: 1, display: 'flex' }}>
+
                                 {navLinks.map((link) => {
                                     if (link.title !== 'Calculators') {
                                         return <NavLink key={link.title} path={link.path} title={link.title} />
                                     } else {
                                         return (
                                             <>
-                                                <IconButton onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
+                                                <IconButton key={link.title} onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
                                                     Calculators<ArrowDropDownIcon />
                                                 </IconButton>
                                                 <Menu
@@ -104,7 +106,7 @@ const Navbar = () => {
                                                     onClose={handleCloseDropDown}
                                                 >
                                                     {calculatorsLinks.map((profLink) => (
-                                                        <MenuItem key={profLink.title} onClick={() => handleCloseDropDown()}>
+                                                        <MenuItem key={profLink.title} onClick={() => handleCloseDropDown()} href=''>
                                                             <Typography
                                                                 textAlign="center"
                                                                 component="a"
@@ -112,6 +114,7 @@ const Navbar = () => {
                                                                 sx={{
                                                                     color: 'inherit',
                                                                     textDecoration: 'none',
+                                                                    width: '100%'
                                                                 }}
                                                             >
                                                                 {profLink.title}</Typography>
@@ -129,7 +132,7 @@ const Navbar = () => {
                             {!isLogin ? <NavLink path="/auth/login" title="Login" /> : <>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: "0px 10px" }}>
-                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                        <Avatar alt="Remy Sharp" src="" />
                                     </IconButton>
                                 </Tooltip>
 

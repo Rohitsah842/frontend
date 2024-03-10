@@ -12,7 +12,7 @@ const InputSlider = ({ isStartAdornment, ...props }: InputSliderprops) => {
                     name={props.name}
                     startAdornment={(isStartAdornment) && <InputAdornment position="start">{props.endormentIcon}</InputAdornment>}
                     endAdornment={(!isStartAdornment) && <InputAdornment position="start">{props.endormentIcon}</InputAdornment>}
-                    sx={{ width: { xs: '50%', md: '40%' }, height: '45px', fontSize: '1.5rem', border: 'none' }}
+                    sx={{ width: { xs: '50%', md: '45%' }, height: '45px', fontSize: '1.5rem', border: 'none' }}
                     value={props.value}
                     onChange={props.onChangeHandle}
                 />

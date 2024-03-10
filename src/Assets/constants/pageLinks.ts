@@ -46,11 +46,20 @@ export const calculatorsLinks:PageLink[]=[
         path:"/calculators/sip"
     },
     {
-        title:"Lumpsum",
-        path:"/calculators/lumpsum"
+        title:"SWP",
+        path:"/calculators/swp"
     },
     {
-        title:"MF Returns",
-        path:"/calculators/mutualfundreturn"
+        title:"Loan EMI",
+        path:"/calculators/loanEMI"
+    },
+    {
+        title:"Home Loan",
+        path:"/calculators/homeloan"
+    }
+    ,
+    {
+        title:"Personal Loan",
+        path:"/calculators/personal-loan"
     }
 ]
