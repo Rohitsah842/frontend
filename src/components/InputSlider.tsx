@@ -3,6 +3,7 @@ import { Box, Slider, InputAdornment, FilledInput, FormControl, Typography } fro
 import { InputSliderprops } from '@/types/InputSliderProps';
 
 const InputSlider = ({ isStartAdornment, ...props }: InputSliderprops) => {
+
     return (
         <Box sx={{ width: '100%', p: '0 30px' }}>
             <FormControl sx={{ m: 1, width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }} variant="filled">

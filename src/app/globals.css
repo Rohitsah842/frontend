@@ -6,3 +6,6 @@
  .MuiChartsAxis-tickLabel{
     font-size: "8px" !important;
 }
+.css-7n2398-MuiResponsiveChart-container{
+    height: '100%' !important;
+}

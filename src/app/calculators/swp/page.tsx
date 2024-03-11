@@ -7,7 +7,7 @@ import {
 import InputSlider from '@/components/InputSlider'
 import DonoutChart from '@/components/DonoutChart'
 import FlexWrapper from '@/components/FlexWrapper'
-import LineChartGraph from '@/components/LineChart'
+// import LineChartGraph from '@/components/LineChart'
 import { SWPCalculation, SwpTableDataType } from '@/utils/swpCal'
 import CustomTable, { ColumnDefinitionType } from '@/components/CustomTable'
 // import { lineChartDataCal } from '@/utils/lineChartDataCal'
@@ -50,6 +50,12 @@ const SWPCalculator = () => {
             key: 'remainingBalance',
             header: "Balance at End (₹)"
         }
+    ]
+
+    const donoutChartData = [
+        { title: 'Total Withdrawal', value: (initialInvestment.withdraw_amount * swpTableData.length), color: 'rgba(184, 0, 216, 1)' },
+        { title: 'Interest Earn', value: (toalinterestEarn) },
+        { title: 'Final Value', value: (finalValue) }
     ]
 
 
@@ -157,10 +163,7 @@ const SWPCalculator = () => {
                             </Stack>
 
                         </Paper>
-                        <Paper elevation={3} sx={{ width: { xs: '100%', md: '35%' } }}>
-                            {/* <DonoutChart principalAmt={toalPrinciple} totalAmount={maturityAmt} /> */}
-                        </Paper>
-
+                        <DonoutChart chartData={donoutChartData} />
                     </Grid>
                     {/* <Grid item xs={12} md={5}>
                         <Paper elevation={3} sx={{ width: '100%' }}>

@@ -11,11 +11,11 @@ import { EMITableDataType } from '@/utils/loanEMIdata'
 import CustomTable, { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
 
-const LoanEMICalculator = () => {
+const CarLoanEMI = () => {
     const [initialValue, SetInitialValue] = useState({
-        Loan_amount: 50000,
+        Loan_amount: 200000,
         interest: 12,
-        time: 3
+        time: 4
 
     })
 
@@ -89,7 +89,7 @@ const LoanEMICalculator = () => {
         <Container maxWidth='xl' sx={{ padding: '1rem' }}>
             <Box sx={{ lg: { m: "10px" }, height: 'minContent' }}>
                 <Stack direction="row" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h5" color="inherit" >Loan EMI Calculator</Typography>
+                    <Typography variant="h5" color="inherit" >Car Loan EMI Calculator</Typography>
                 </Stack >
                 <Grid container rowSpacing={2} columnSpacing={1} sx={{ my: '25px', maxWidth: "100%" }}>
                     <Grid item xs={12} md={7} sx={{ display: { xs: 'block', md: 'flex' } }}>
@@ -97,7 +97,7 @@ const LoanEMICalculator = () => {
                             <Stack spacing={4}>
                                 <InputSlider
                                     isStartAdornment={true}
-                                    title='Loan Amount'
+                                    title='Amount you need'
                                     name='Loan_amount'
                                     min={10000}
                                     max={5000000}
@@ -162,4 +162,4 @@ const LoanEMICalculator = () => {
     )
 }
 
-export default LoanEMICalculator
+export default CarLoanEMI;

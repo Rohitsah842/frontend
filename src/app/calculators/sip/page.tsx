@@ -11,7 +11,8 @@ import { get } from 'lodash'
 import { lumpsumAmmount } from '@/utils/lumpSumCal'
 import FlexWrapper from '@/components/FlexWrapper'
 import LineChartGraph from '@/components/LineChart'
-import { lineChartDataCal } from '@/utils/lineChartDataCal'
+import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
+import { lineChartDataType } from '@/types/LineChartData'
 
 const SIPCalculator = () => {
     const [initialInvestment, SetInitialInvestment] = useState({
@@ -24,7 +25,8 @@ const SIPCalculator = () => {
     const [maturityAmt, setMaturityAmount] = useState<number>(0);
     const [investmentType, setInvestmentType] = useState<string>('monthly')
     const [toalPrinciple, setToalPrinciple] = useState<number>(0)
-    const [lineChartdata, setLineChartdata] = useState<Array<{ showMark: boolean, data: number[], label: string }>>([]);
+    const [lineChartdata, setLineChartdata] = useState<lineChartDataType[]>([]);
+    const [axisLabel, setAxisLabel] = useState<number[]>([])
 
     const menuItems = [
         { title: "Montly", value: 'monthly' },
@@ -34,13 +36,18 @@ const SIPCalculator = () => {
         { title: "Lump sum", value: 'lumpsum' }
 
     ]
+    const donoutChartData = [
+        { title: 'Principle', value: (toalPrinciple), color: 'rgba(184, 0, 216, 1)' },
+        { title: 'Interest', value: (maturityAmt - toalPrinciple) }
+    ]
 
     useEffect(() => {
         if (get(investmenttypeData, `${investmentType}.type`) === 'SIP') {
             setMaturityAmount(sipInterestAmt(initialInvestment.amount, initialInvestment.interest, initialInvestment.time, get(investmenttypeData, `${investmentType}.noOfPayment`, 0)));
             setToalPrinciple(initialInvestment.amount * initialInvestment.time * get(investmenttypeData, `${investmentType}.noOfPayment`, 0))
-            setLineChartdata(lineChartDataCal(initialInvestment.amount, initialInvestment.interest, get(investmenttypeData, `${investmentType}.noOfPayment`, 0), "SIP"))
-
+            const lineData = sipLineChartDataCal(initialInvestment.amount, initialInvestment.interest, get(investmenttypeData, `${investmentType}.noOfPayment`, 0), "SIP");
+            setLineChartdata(lineData.lineChartData);
+            setAxisLabel(lineData.xAxisData);
 
         } else {
             setMaturityAmount(lumpsumAmmount(initialInvestment.amount, initialInvestment.interest, initialInvestment.time));
@@ -72,7 +79,7 @@ const SIPCalculator = () => {
                     <Typography variant="h5" color="inherit" >SIP Calculators</Typography>
                     <SelectDropDown value={investmentType} onChangeHandler={handlerChangeSelect} menuItems={menuItems} />
                 </Stack >
-                <Grid container rowSpacing={2} columnSpacing={1} sx={{ m: '0', maxWidth: "100%" }}>
+                <Grid container rowSpacing={2} columnSpacing={0} sx={{ m: '0', maxWidth: "100%" }}>
                     <Grid item xs={12} md={7} sx={{ display: { xs: 'block', md: 'flex' } }}>
                         <Paper elevation={3} sx={{ width: { xs: '100%', md: '60%' } }}>
                             <Stack spacing={4}>
@@ -96,15 +103,14 @@ const SIPCalculator = () => {
                             </Stack>
 
                         </Paper>
-                        <Paper elevation={3} sx={{ width: { xs: '100%', md: '35%' } }}>
-                            <DonoutChart initialAmt={toalPrinciple} totalAmount={maturityAmt} title1='Principle' title2='Total Amount' />
-                        </Paper>
+                        <DonoutChart chartData={donoutChartData} />
+                        {/* <Paper elevation={3} sx={{ width: { xs: '100%', md: '39%', display: 'flex', alignItems: 'center' } }}>
+                        </Paper> */}
 
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <Paper elevation={3} sx={{ width: '100%' }}>
-                            <LineChartGraph dataValue={lineChartdata} />
-                        </Paper>
+                        <LineChartGraph dataValue={lineChartdata} axisLabel={axisLabel} />
+
                     </Grid>
 
                 </Grid>
