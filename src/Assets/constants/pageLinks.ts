@@ -47,6 +47,43 @@ export const calculatorsLinks: PageLink[] = [
     path: "/calculators/swp",
   },
   {
+    title: "MF",
+    path: "/calculators/mutual-fund",
+  },
+  {
+    title: "SSY",
+    path: "/calculators/sukanaya-smariddhi-yojana",
+  },
+  {
+    title: "PFF",
+    path: "/calculators/ppf-calculator",
+  },
+  {
+    title: "EPF",
+    path: "/calculators/epf",
+  },
+  {
+    title: "FD",
+    path: "/calculators/fixed-deposit",
+  },
+  {
+    title: "RD",
+    path: "/calculators/rd",
+  },
+  {
+    title: "NPS",
+    path: "/calculators/nps",
+  },
+  {
+    title: "HRA",
+    path: "/calculators/hra",
+  },
+  {
+    title: "Retirement",
+    path: "/calculators/retirement",
+  },
+
+  {
     title: "Loan EMI",
     path: "/calculators/loanEMI",
   },

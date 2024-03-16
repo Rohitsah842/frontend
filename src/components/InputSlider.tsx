@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Slider, InputAdornment, FilledInput, FormControl, Typography } from '@mui/material'
 import { InputSliderprops } from '@/types/InputSliderProps';
 
-const InputSlider = ({ isStartAdornment, ...props }: InputSliderprops) => {
+const InputSlider = ({ isStartAdornment, isSliderHide = false, isDisable = false, ...props }: InputSliderprops) => {
 
     return (
         <Box sx={{ width: '100%', p: '0 30px' }}>
@@ -16,9 +16,11 @@ const InputSlider = ({ isStartAdornment, ...props }: InputSliderprops) => {
                     sx={{ width: { xs: '50%', md: '45%' }, height: '45px', fontSize: '1.5rem', border: 'none' }}
                     value={props.value}
                     onChange={props.onChangeHandle}
+                    disabled={isDisable}
+
                 />
             </FormControl>
-            <Slider
+            {!isSliderHide && <Slider
                 name={props.name}
                 defaultValue={props.value}
                 aria-label="Default"
@@ -30,6 +32,7 @@ const InputSlider = ({ isStartAdornment, ...props }: InputSliderprops) => {
                 max={props.max}
                 sx={{ color: 'inherit' }}
             />
+            }
         </Box>
     )
 }

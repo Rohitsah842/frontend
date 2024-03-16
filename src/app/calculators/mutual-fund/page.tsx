@@ -1,71 +1,67 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { monthlyEMI } from '@/utils/loanEMICal'
-import { loanEMIData } from '@/utils/loanEMIdata'
-import { EMITableDataType } from '@/utils/loanEMIdata'
 import { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
+import { lumpsumAmmount, lumpsumTableDataType } from '@/utils/lumpSumCal'
+import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
 
-const HomeLoanEMI = () => {
+const MutualFundCalculator = () => {
     const [initialValue, SetInitialValue] = useState({
-        Loan_amount: 100000,
-        interest: 9,
-        time: 4
+        investment_amount: 50000,
+        interest: 12,
+        time: 3
 
     })
 
-    const [monthlyPayment, setmonthlyPayment] = useState<number>(0);
-    const [EMITableData, setEMITableData] = useState<EMITableDataType[]>([])
+    const [totalAmount, setTotalAmount] = useState<number>(0);
+    const [mutualFundTableData, setmutualFundTableData] = useState<lumpsumTableDataType[]>([])
     const [lineChartdata, setLineChartdata] = useState<lineChartDataType[]>([]);
     const [axisData, setAxisData] = useState<number[]>([]);
 
-    const columns: ColumnDefinitionType<EMITableDataType, keyof EMITableDataType>[] = [
+    const columns: ColumnDefinitionType<lumpsumTableDataType, keyof lumpsumTableDataType>[] = [
         {
-            key: 'month',
-            header: "Month"
+            key: 'year',
+            header: "Year"
         },
         {
-            key: 'openingBalance',
-            header: "Loan Amount (₹)"
+            key: 'investmentAmount',
+            header: "Principle Amount"
         },
         {
-            key: 'EMI',
-            header: "Monthly EMI (₹)"
+            key: 'interestEarn',
+            header: "Yearly Interest Earn (₹)"
         },
         {
-            key: 'monthlyInterestPaid',
-            header: "Monthly Interest Paid (₹)"
-        },
-        {
-            key: 'monthlyPrinciplePaid',
-            header: "Monthly Principle Paid (₹)"
-        },
-        {
-            key: 'closingBalance',
-            header: "Remaining Loan Amount(₹)"
+            key: 'totalAmount',
+            header: "Total Amount (₹)"
         }
     ]
 
     const donoutChartData = [
-        { title: 'Total Amount', value: (monthlyPayment * EMITableData.length), color: 'rgba(184, 0, 216, 1)' },
-        { title: 'Interest Paid', value: ((monthlyPayment * EMITableData.length) - initialValue.Loan_amount) },
-        { title: 'Loan Amount', value: (initialValue.Loan_amount) },
+        { title: 'Investment Amount', value: (initialValue.investment_amount), color: 'rgba(184, 0, 216, 1)' },
+        { title: 'Estimated Interest', value: (totalAmount - initialValue.investment_amount) },
+        // { title: 'Total Amount', value: (totalAmount) },
     ]
 
 
 
     useEffect(() => {
 
-        setmonthlyPayment(monthlyEMI(initialValue.Loan_amount, initialValue.interest, initialValue.time));
-        let data = loanEMIData(initialValue.Loan_amount, initialValue.interest, initialValue.time);
+        let data = lumpsumAmmount(initialValue.investment_amount, initialValue.interest, initialValue.time);
+        setTotalAmount(data.totalValue);
+        setmutualFundTableData(data.lumpsumData);
 
-        setEMITableData(data.EMIdata);
-        setLineChartdata(data.EMIChartData)
-        setAxisData(data.axisData);
+        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 1, "Lumpsum");
+
+        setLineChartdata(chartData.lineChartData)
+        setAxisData(chartData.xAxisData);
 
     }, [initialValue])
+
+    console.log(mutualFundTableData);
+
 
     const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -80,15 +76,15 @@ const HomeLoanEMI = () => {
     const inputSliderData: InputSliderprops[] = [
         {
             isStartAdornment: true,
-            name: 'Loan_amount',
+            title: 'Total investment',
+            name: 'investment_amount',
             min: 10000,
             max: 5000000,
             stepSize: 100,
-            title: 'Amount you need',
             endormentIcon: '₹',
             onChangeHandle: handlerChange,
             onChangeSliderHandler: handlerChangeSlider,
-            value: initialValue.Loan_amount
+            value: initialValue.investment_amount,
         },
         {
             isStartAdornment: false,
@@ -119,20 +115,16 @@ const HomeLoanEMI = () => {
 
     const totalValueData = [
         {
-            title: "Monthly Loan EMI",
-            value: monthlyPayment
-        },
-        {
-            title: "Loan Amount",
-            value: initialValue.Loan_amount
+            title: "Invested Amount",
+            value: initialValue.investment_amount
         },
         {
             title: "Interest Amount",
-            value: (monthlyPayment * initialValue.time * 12 - initialValue.Loan_amount)
+            value: (totalAmount - initialValue.investment_amount)
         },
         {
-            title: "Total Amount Pay",
-            value: monthlyPayment * initialValue.time * 12
+            title: "Total Amount",
+            value: totalAmount
         }
     ]
 
@@ -140,17 +132,16 @@ const HomeLoanEMI = () => {
 
 
 
-
     return (
         <CalculatorComponent
-            headingTitle="Home Loan EMI Calculator"
+            headingTitle="Mutual Fund Returns Calculator"
             inputSliderArray={inputSliderData}
             totalValueArray={totalValueData}
-            tableData={{ columns: columns, data: EMITableData }}
+            tableData={{ columns: columns, data: mutualFundTableData }}
             donoutChartData={{ chartData: donoutChartData }}
             lineChartData={{ chartData: lineChartdata, axisData: axisData, axisLabel: "Year" }}
         />
     )
 }
 
-export default HomeLoanEMI;
+export default MutualFundCalculator

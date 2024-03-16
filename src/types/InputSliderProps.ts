@@ -3,10 +3,12 @@ export interface InputSliderprops {
   max: number;
   stepSize: number;
   value: number;
-  onChangeHandle: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeHandle?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSliderHandler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isStartAdornment?: boolean;
   endormentIcon?: string;
   name: string;
   title?: string;
+  isSliderHide?: boolean;
+  isDisable?: boolean;
 }

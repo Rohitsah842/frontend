@@ -6,7 +6,7 @@ export const sipLineChartDataCal = (
   p: number,
   r: number,
   n: number,
-  investmentType: string
+  investmentType: string | undefined
 ) => {
   const principleAmount: number[] = [];
   const totalAmount: number[] = [];
@@ -15,37 +15,46 @@ export const sipLineChartDataCal = (
   const lineChartData: lineChartDataType[] = [];
 
   if (investmentType === "SIP") {
-    for (var i = 2; i <= 24; i += 2) {
+    for (var i = 2; i <= 40; i += 2) {
       xAxisData.push(i);
-      var value = sipInterestAmt(p, r, i, n);
+      var value = sipInterestAmt(p, r, i, n).SIPTotalValue;
       principleAmount.push(p * i * n);
       totalAmount.push(value);
       interestAmount.push(value - p * i * n);
     }
+    lineChartData.push({
+      showMark: false,
+      data: principleAmount,
+      label: "Principle ",
+    });
+    lineChartData.push({
+      showMark: false,
+      data: interestAmount,
+      label: "Interest",
+    });
+    lineChartData.push({
+      showMark: false,
+      data: totalAmount,
+      label: "Total return",
+    });
+  } else if (investmentType === "Lumpsum") {
+    for (var i = 2; i <= 30; i += 2) {
+      xAxisData.push(i);
+      var value = lumpsumAmmount(p, r, i).totalValue;
+      totalAmount.push(value);
+      interestAmount.push(value - p);
+    }
+    lineChartData.push({
+      showMark: false,
+      data: interestAmount,
+      label: "Interest",
+    });
+    lineChartData.push({
+      showMark: false,
+      data: totalAmount,
+      label: "Total return",
+    });
   }
-  // if(investmentType==="lumpsum"){
-  //         for(var i=1; i<=40;i++){
-  //            var value=  lumpsumAmmount(p, r, i);
-  //            principleAmount.push(p*i*n);
-  //            totalAmount.push(value);
-  //            interestAmount.push(value-(p*i*n))
-  //         }
-  //     }
-  lineChartData.push({
-    showMark: false,
-    data: principleAmount,
-    label: "Principle ",
-  });
-  lineChartData.push({
-    showMark: false,
-    data: interestAmount,
-    label: "Interest",
-  });
-  lineChartData.push({
-    showMark: false,
-    data: totalAmount,
-    label: "Total return",
-  });
 
   return { lineChartData, xAxisData };
 };

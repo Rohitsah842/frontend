@@ -31,7 +31,7 @@ export const loanEMIData = (
   let interestPaidAmount: number[] = [];
   let principlePaidAmount: number[] = [];
   let remainingLoanAmount: number[] = [];
-  let axisLabel: number[] = [];
+  let axisData: number[] = [];
   var sum1 = 0;
   var sum2 = 0;
 
@@ -39,13 +39,13 @@ export const loanEMIData = (
   let EMI = monthlyEMI(loanAmount, interest, t);
   EMITableData = { ...EMITableData, EMI: EMI };
   for (let i = 0; i < t * 12; i++) {
-    axisLabel.push(i + 1);
+    axisData.push(i + 1);
     EMITableData = {
       ...EMITableData,
       month: i + 1,
       openingBalance: loanAmount,
     };
-    let interestAmt = lumpsumAmmount(loanAmount, r, 1) - loanAmount;
+    let interestAmt = lumpsumAmmount(loanAmount, r, 1).totalValue - loanAmount;
     sum1 += interestAmt;
     interestPaidAmount.push(sum1);
     loanAmount =
@@ -77,5 +77,5 @@ export const loanEMIData = (
   //   data: remainingLoanAmount,
   //   showMark: false,
   // });
-  return { EMIdata, EMIChartData, axisLabel };
+  return { EMIdata, EMIChartData, axisData };
 };

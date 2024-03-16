@@ -2,13 +2,14 @@
 import React, { useState } from 'react'
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material'
 import TablePaginationWrapper from './TablePaginationWrapper';
+import { dollarIndianLocale } from '@/Assets/constants';
 
 export type ColumnDefinitionType<T extends Record<string, any>, K extends keyof T> = {
     key: K;
     header: string;
 }
 
-type TableProps<T extends Record<string, any>, K extends keyof T> = {
+export type TableProps<T extends Record<string, any>, K extends keyof T> = {
     data: T[];
     columns: Array<ColumnDefinitionType<T, K>>;
 }
@@ -54,7 +55,7 @@ const CustomTable = <T extends Record<string, any>, K extends keyof T>({ data, c
                         return (
                             <TableRow key={`row-${index1}`}>
                                 {columns.map((column, index2) => {
-                                    return <TableCell key={`cell-${index2}`} align="center">{row[column.key]}</TableCell>
+                                    return <TableCell key={`cell-${index2}`} align="center">{dollarIndianLocale.format(row[column.key])}</TableCell>
 
                                 })}
 

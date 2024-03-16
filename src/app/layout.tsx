@@ -8,7 +8,7 @@ import "./globals.css";
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 });
 
