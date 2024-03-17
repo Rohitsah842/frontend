@@ -60,7 +60,7 @@ export const calculatorsLinks: PageLink[] = [
   },
   {
     title: "EPF",
-    path: "/calculators/epf",
+    path: "/calculators/epf-calculator",
   },
   {
     title: "FD",

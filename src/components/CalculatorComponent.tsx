@@ -1,9 +1,7 @@
 import React from 'react'
 import { Container, Grid, Typography, Paper, Stack, Box } from "@mui/material"
 import SelectDropDown from '@/components/SelectDropDown'
-import { SelectChangeEvent } from '@mui/material/Select';
 import InputSlider from './InputSlider';
-import { investmenttypeData } from '@/Assets/constants/investmentType';
 import FlexWrapper from './FlexWrapper';
 import DonoutChart from './DonoutChart';
 import LineChartGraph from './LineChart';
@@ -20,7 +18,7 @@ const CalculatorComponent = ({ headingTitle, inputSliderArray, totalValueArray, 
             <Box sx={{ lg: { m: "10px" }, height: '100vh' }}>
                 <Stack direction="row" sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h5" color="inherit" >{headingTitle}</Typography>
-                    {/* {isDropDown && <SelectDropDown value={dropDown?.value} onChangeHandler={dropDown?.onChangeHandler} menuItems={dropDown?.menuItems} />} */}
+                    {(isDropDown && dropDown !== undefined) && <SelectDropDown value={dropDown.value} onChangeHandler={dropDown.onChangeHandler} menuItems={dropDown.menuItems} />}
                 </Stack >
                 <Grid container rowSpacing={2} columnSpacing={0} sx={{ m: '0', maxWidth: "100%" }}>
                     <Grid item xs={12} md={7} sx={{ display: { xs: 'block', md: 'flex' } }}>
@@ -36,6 +34,8 @@ const CalculatorComponent = ({ headingTitle, inputSliderArray, totalValueArray, 
                                         endormentIcon={filedValue.endormentIcon}
                                         onChangeHandle={filedValue.onChangeHandle}
                                         onChangeSliderHandler={filedValue.onChangeSliderHandler}
+                                        isDisable={filedValue.isDisable}
+                                        isSliderHide={filedValue.isSliderHide}
                                         value={filedValue.value} />
                                 })}
 

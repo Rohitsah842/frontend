@@ -4,6 +4,7 @@ import { InputSliderprops } from '@/types/InputSliderProps';
 
 const InputSlider = ({ isStartAdornment, isSliderHide = false, isDisable = false, ...props }: InputSliderprops) => {
 
+
     return (
         <Box sx={{ width: '100%', p: '0 30px' }}>
             <FormControl sx={{ m: 1, width: '100%', display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }} variant="filled">

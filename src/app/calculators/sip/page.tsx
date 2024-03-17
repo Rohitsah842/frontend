@@ -1,20 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Container, Grid, Typography, Paper, Stack, Box } from "@mui/material"
-import InputSlider from '@/components/InputSlider'
-import DonoutChart from '@/components/DonoutChart'
 import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
 import { investmenttypeData } from '@/Assets/constants/investmentType'
-import SelectDropDown from '@/components/SelectDropDown'
 import { SelectChangeEvent } from '@mui/material/Select';
 import { get } from 'lodash'
-import { lumpsumAmmount, lumpsumTableDataType } from '@/utils/lumpSumCal'
-import FlexWrapper from '@/components/FlexWrapper'
-import LineChartGraph from '@/components/LineChart'
+import { lumpsumAmmount } from '@/utils/lumpSumCal'
 import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { lineChartDataType } from '@/types/LineChartData'
-import CustomTable, { ColumnDefinitionType } from '@/components/CustomTable'
-import { dollarIndianLocale } from '@/Assets/constants'
+import CalculatorComponent from '@/components/CalculatorComponent'
+import { InputSliderprops } from '@/types/InputSliderProps'
 
 const SIPCalculator = () => {
     const [initialInvestment, SetInitialInvestment] = useState({
@@ -54,7 +48,7 @@ const SIPCalculator = () => {
         },
         {
             key: 'interestEarn',
-            header: "Yearly Interest Earn (₹)"
+            header: `${get(investmenttypeData, `${investmentType}.name`, "")} Interest Earn (₹)`
         },
         {
             key: 'totalAmount',
@@ -94,51 +88,77 @@ const SIPCalculator = () => {
         setInvestmentType(event.target.value)
     }
 
+    const inputSliderData: InputSliderprops[] = [
+        {
+            isStartAdornment: true,
+            title: get(investmenttypeData, `${investmentType}.title`),
+            name: 'amount',
+            min: 500,
+            max: 100000,
+            stepSize: 50,
+            endormentIcon: '₹',
+            onChangeSliderHandler: handlerChangeSlider,
+            value: initialInvestment.amount,
+            onChangeHandle: handlerChange,
+
+        },
+        {
+            isStartAdornment: false,
+            name: 'interest',
+            min: 1,
+            max: 30,
+            stepSize: 0.1,
+            endormentIcon: '%',
+            onChangeHandle: handlerChange,
+            onChangeSliderHandler: handlerChangeSlider,
+            value: initialInvestment.interest,
+            isSliderHide: true,
+            title: 'Interest rate (% PA)'
+        },
+        {
+            isStartAdornment: false,
+            name: 'time',
+            min: 1,
+            max: 40,
+            stepSize: 1,
+            endormentIcon: 'Yr.',
+            onChangeHandle: handlerChange,
+            onChangeSliderHandler: handlerChangeSlider,
+            value: initialInvestment.time,
+            title: 'Time Period'
+        }
+
+    ]
+
+    const totalValueData = [
+        {
+            title: "Invested Amount",
+            value: toalPrinciple
+        },
+        {
+            title: "Interest return",
+            value: (maturityAmt - toalPrinciple)
+        },
+        {
+            title: "Total Amount",
+            value: maturityAmt
+        }
+    ]
+
 
 
 
     return (
-        <Container maxWidth='xl' sx={{ height: 'calc(100vh - 65px)', padding: '1rem' }}>
-            <Box sx={{ lg: { m: "10px" }, height: '100vh' }}>
-                <Stack direction="row" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h5" color="inherit" >SIP Calculators</Typography>
-                    <SelectDropDown value={investmentType} onChangeHandler={handlerChangeSelect} menuItems={menuItems} />
-                </Stack >
-                <Grid container rowSpacing={2} columnSpacing={0} sx={{ m: '0', maxWidth: "100%" }}>
-                    <Grid item xs={12} md={7} sx={{ display: { xs: 'block', md: 'flex' } }}>
-                        <Paper elevation={3} sx={{ width: { xs: '100%', md: '60%' } }}>
-                            <Stack spacing={4}>
-                                <InputSlider isStartAdornment={true} title={get(investmenttypeData, `${investmentType}.title`)} name='amount' min={500} max={100000} stepSize={50} endormentIcon='₹' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.amount} />
-                                <InputSlider isStartAdornment={false} title='Expected return rate (p.a)' name='interest' min={1} max={30} stepSize={0.1} endormentIcon='%' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.interest} />
-                                <InputSlider isStartAdornment={false} title='Time Period' name='time' min={1} max={40} stepSize={1} endormentIcon='Yr.' onChangeHandle={handlerChange} onChangeSliderHandler={handlerChangeSlider} value={initialInvestment.time} />
-                            </Stack>
-                            <Stack spacing={4} sx={{ mt: '3rem' }} >
-                                <FlexWrapper>
-                                    <Typography variant='body1' color="inherit" >Investment amount</Typography>
-                                    <Typography variant="body1" color="inherit" >₹ {dollarIndianLocale.format(toalPrinciple)}</Typography>
-                                </FlexWrapper>
-                                <FlexWrapper>
-                                    <Typography variant='body1' color="inherit" >Interest return</Typography>
-                                    <Typography variant="body1" color="inherit" >₹ {dollarIndianLocale.format(maturityAmt - toalPrinciple)}</Typography>
-                                </FlexWrapper>
-                                <FlexWrapper>
-                                    <Typography variant='body1' color="inherit" >Total amount</Typography>
-                                    <Typography variant="body1" color="inherit" >₹ {dollarIndianLocale.format(maturityAmt)}</Typography>
-                                </FlexWrapper>
-                            </Stack>
-
-                        </Paper>
-                        <DonoutChart chartData={donoutChartData} />
-                    </Grid>
-                    <Grid item xs={12} md={5}>
-                        <LineChartGraph dataValue={lineChartdata} axisData={axisData} axisLabel='Year' />
-
-                    </Grid>
-
-                </Grid>
-                <CustomTable columns={columns} data={SIPTableData} />
-            </Box>
-        </Container>
+        <CalculatorComponent
+            headingTitle="SIP Calculators"
+            inputSliderArray={inputSliderData}
+            totalValueArray={totalValueData}
+            tableData={{ columns: columns, data: SIPTableData }}
+            donoutChartData={{ chartData: donoutChartData }}
+            lineChartData={{ chartData: lineChartdata, axisData: axisData, axisLabel: "Year" }}
+            isDropDown={true}
+            dropDown={{ value: investmentType, onChangeHandler: handlerChangeSelect, menuItems: menuItems }}
+        />
     )
 }
 
