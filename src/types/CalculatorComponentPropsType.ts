@@ -16,7 +16,7 @@ type TableProps<T extends Record<string, any>, K extends keyof T> = {
 export interface CalculatorComponentPropsType {
   headingTitle: String;
   inputSliderArray: InputSliderprops[];
-  totalValueArray: { title: string; value: number }[];
+  totalValueArray: { title: string; value: number; isShow?: boolean }[];
   donoutChartData: donoutChartDataType;
   lineChartData: {
     chartData: lineChartDataType[];

@@ -9,6 +9,7 @@ import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { lineChartDataType } from '@/types/LineChartData'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
+import { ColumnDefinitionType } from '@/components/CustomTable';
 
 const SIPCalculator = () => {
     const [initialInvestment, SetInitialInvestment] = useState({

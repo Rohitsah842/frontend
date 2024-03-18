@@ -4,7 +4,7 @@ export interface epfDataType {
   year: number;
   employeeContribution: number;
   employerContribution: number;
-  interesttEarn: number;
+  interestEarn: number;
   totalAmount: number;
 }
 
@@ -27,7 +27,7 @@ export const epfCalculation = (
     year: 0,
     employeeContribution: 0,
     employerContribution: 0,
-    interesttEarn: 0,
+    interestEarn: 0,
     totalAmount: 0,
   };
   let timePeriod = retirementAge - currentAge;
@@ -70,7 +70,7 @@ export const epfCalculation = (
     totalInterestAmount.push(totalInterest);
     epfData = {
       ...epfData,
-      interesttEarn: interestAmount,
+      interestEarn: interestAmount,
       totalAmount: totalAmountGet + +currentEpfBalance,
     };
 

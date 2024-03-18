@@ -44,7 +44,7 @@ const CalculatorComponent = ({ headingTitle, inputSliderArray, totalValueArray, 
                                 {totalValueArray.map((value, i) => {
                                     return (<FlexWrapper key={i}>
                                         <Typography variant='body1' color="inherit" ><b>{value.title} </b></Typography>
-                                        <Typography variant="body1" color="inherit" ><b>₹ {dollarIndianLocale.format(value.value)} </b></Typography>
+                                        <Typography variant="body1" color="inherit" ><b>{!value.isShow ? `₹ ${dollarIndianLocale.format(value.value)}` : (value.value)} </b></Typography>
                                     </FlexWrapper>)
                                 })}
 

@@ -27,7 +27,6 @@ export const sipInterestAmt = (
     let amount = Math.round(
       investment * ((Math.pow(1 + i, 1) - 1) / i) * (1 + i)
     );
-    console.log(amount, +investment);
     tableData = {
       ...tableData,
       investmentAmount: yearlyInvestment,
