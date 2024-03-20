@@ -97,9 +97,9 @@ const LoanEMICalculator = () => {
             max: 30,
             stepSize: 0.1,
             endormentIcon: '%',
-            isDisable: true,
             value: initialValue.interest,
-            isSliderHide: true,
+            onChangeHandle: handlerChange,
+            onChangeSliderHandler: handlerChangeSlider,
             title: 'Interest rate (% PA)'
         },
         {

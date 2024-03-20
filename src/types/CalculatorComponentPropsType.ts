@@ -18,12 +18,12 @@ export interface CalculatorComponentPropsType {
   inputSliderArray: InputSliderprops[];
   totalValueArray: { title: string; value: number; isShow?: boolean }[];
   donoutChartData: donoutChartDataType;
-  lineChartData: {
+  lineChartData?: {
     chartData: lineChartDataType[];
     axisData: number[];
     axisLabel: string;
   };
-  tableData: TableProps<T, K>;
+  tableData?: TableProps<T, K>;
   isDropDown?: boolean;
   dropDown?: dropDownTypes;
 }

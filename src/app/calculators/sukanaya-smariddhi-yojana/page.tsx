@@ -5,8 +5,6 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 import { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
-import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
-import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import { investmenttypeData } from '@/Assets/constants/investmentType'
