@@ -22,19 +22,19 @@ export const sipInterestAmt = (
   let SIPTotalValue = Math.round(
     investment * ((Math.pow(1 + i, time * n) - 1) / i) * (1 + i)
   );
-  let yearlyInvestment = investment;
+  let InvestedAmount = investment;
   for (let t = 1; t <= time * n; t++) {
     let amount = Math.round(
       investment * ((Math.pow(1 + i, 1) - 1) / i) * (1 + i)
     );
     tableData = {
       ...tableData,
-      investmentAmount: yearlyInvestment,
+      investmentAmount: InvestedAmount,
       year: t,
       interestEarn: amount - +investment,
       totalAmount: amount,
     };
-    investment = amount + +yearlyInvestment;
+    investment = amount + +InvestedAmount;
     SIPTableData.push(tableData);
   }
 
