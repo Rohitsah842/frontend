@@ -70,63 +70,17 @@ export const calculatorsLinks: PageLink[] = [
   },
 
   {
-    title: "SWP",
-    path: "/calculators/swp",
-    bodyText:
-      "Calculate your final amount with Systematic Withdrawal Plans (SWP)",
-    imgSrc: SWP,
-  },
-  {
-    title: "MF",
+    title: "Mutual Fund",
     path: "/calculators/mutual-fund",
     bodyText: "Calculate the returns on your mutual fund investments",
     imgSrc: mutualFund,
   },
   {
-    title: "SSY",
-    path: "/calculators/sukanaya-smariddhi-yojana",
-    bodyText:
-      "Calculate returns for Sukanya Smariddhi Yojana (SSY) as per your investment",
-    imgSrc: SSY,
-  },
-  {
-    title: "PPF",
-    path: "/calculators/ppf-calculator",
-    bodyText: "Calculate your returns on Public Provident Fund (PPF)",
-    imgSrc: PPF,
-  },
-  {
-    title: "EPF",
-    path: "/calculators/epf-calculator",
-    bodyText: "Calculate returns for your Employee’s Provident Fund (EPF)",
-    imgSrc: EPF,
-  },
-  {
-    title: "FD",
+    title: "Fixed Deposit",
     path: "/calculators/fixed-deposit",
     bodyText: "Check returns on your fixed deposits (FDs) without any hassle",
     imgSrc: fixedDeposite,
   },
-  {
-    title: "RD",
-    path: "/calculators/rd",
-    bodyText:
-      "Check returns on your Recurring Deposit (RD) in just a few clicks",
-    imgSrc: RD,
-  },
-  {
-    title: "NPS",
-    path: "/calculators/nps",
-    bodyText: "Calculate returns for your National Pension Scheme (NPS)",
-    imgSrc: NPS,
-  },
-  {
-    title: "HRA",
-    path: "/calculators/hra",
-    bodyText: "Calculate your House Rent Allowance (HRA)",
-    imgSrc: HRA,
-  },
-
   {
     title: "Loan EMI",
     path: "/calculators/loanEMI",
@@ -151,5 +105,50 @@ export const calculatorsLinks: PageLink[] = [
     path: "/calculators/car-loan",
     bodyText: "Calculate your car loan EMI",
     imgSrc: carLoan,
+  },
+  {
+    title: "SWP",
+    path: "/calculators/swp",
+    bodyText:
+      "Calculate your final amount with Systematic Withdrawal Plans (SWP)",
+    imgSrc: SWP,
+  },
+  {
+    title: "SSY",
+    path: "/calculators/sukanaya-smariddhi-yojana",
+    bodyText:
+      "Calculate returns for Sukanya Smariddhi Yojana (SSY) as per your investment",
+    imgSrc: SSY,
+  },
+  {
+    title: "PPF",
+    path: "/calculators/ppf-calculator",
+    bodyText: "Calculate your returns on Public Provident Fund (PPF)",
+    imgSrc: PPF,
+  },
+  {
+    title: "EPF",
+    path: "/calculators/epf-calculator",
+    bodyText: "Calculate returns for your Employee’s Provident Fund (EPF)",
+    imgSrc: EPF,
+  },
+  {
+    title: "RD",
+    path: "/calculators/rd",
+    bodyText:
+      "Check returns on your Recurring Deposit (RD) in just a few clicks",
+    imgSrc: RD,
+  },
+  {
+    title: "NPS",
+    path: "/calculators/nps",
+    bodyText: "Calculate returns for your National Pension Scheme (NPS)",
+    imgSrc: NPS,
+  },
+  {
+    title: "HRA",
+    path: "/calculators/hra",
+    bodyText: "Calculate your House Rent Allowance (HRA)",
+    imgSrc: HRA,
   },
 ];

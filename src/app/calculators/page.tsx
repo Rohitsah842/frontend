@@ -1,7 +1,6 @@
 
 import React from 'react'
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import { calculatorsLinks } from '@/Assets/constants';
 import CalculatorCard from '@/components/CalculatorCard';
 

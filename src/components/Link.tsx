@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { useTheme } from '@mui/material/styles';
 
-const AnchorLink: React.FC<{ path: string, title: string, color?: string }> = (props) => {
+const AnchorLink: React.FC<{ path: string, title: string | JSX.Element, color?: string }> = (props) => {
   const theme = useTheme();
   return (
     <Link href={props.path}

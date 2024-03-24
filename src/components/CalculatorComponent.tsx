@@ -14,8 +14,8 @@ const CalculatorComponent = ({ headingTitle, inputSliderArray, totalValueArray, 
 
 
     return (
-        <Container maxWidth='xl' sx={{ height: 'calc(100vh - 65px)', padding: '1rem' }}>
-            <Box sx={{ lg: { m: "10px" }, height: '100vh' }}>
+        <Container maxWidth='xl' sx={{ height: 'calc(100% - 65px)', padding: '1rem' }}>
+            <Box sx={{ lg: { m: "10px" } }}>
                 <Stack direction="row" sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h5" color="inherit" >{headingTitle}</Typography>
                     {(isDropDown && dropDown !== undefined) && <SelectDropDown value={dropDown.value} onChangeHandler={dropDown.onChangeHandler} menuItems={dropDown.menuItems} />}
@@ -54,7 +54,7 @@ const CalculatorComponent = ({ headingTitle, inputSliderArray, totalValueArray, 
                         <DonoutChart chartData={donoutChartData.chartData} />
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <LineChartGraph dataValue={lineChartData.chartData} axisData={lineChartData.axisData} axisLabel={lineChartData.axisLabel} />
+                        {lineChartData && <LineChartGraph dataValue={lineChartData.chartData} axisData={lineChartData.axisData} axisLabel={lineChartData.axisLabel} />}
 
                     </Grid>
 

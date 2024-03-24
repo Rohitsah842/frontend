@@ -5,12 +5,10 @@ import Box from '@mui/material/Box';
 
 import Navbar from '../sections/navbar/Navbar';
 import "./globals.css";
+import Footer from '@/sections/Footer';
+import { useState } from 'react';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+export type modeType = "light" | "dark"
 
 
 
@@ -19,18 +17,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+  const [displayMode, setDisplayMode] = useState<modeType>('dark');
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: displayMode,
+    },
+  });
+
   return (
     <html lang="en">
       <head>
         <meta name="theme-color" content={darkTheme.palette.primary.contrastText} />
       </head>
+
       <body>
         <ThemeProvider theme={darkTheme}>
-          <Box sx={{ minHeight: '100vh' }}>
+          <Navbar />
+          <Box sx={{ minHeight: '43vh' }}>
             <CssBaseline />
-            <Navbar />
             {children}
           </Box>
+          <Footer modeValue={displayMode} setModeValue={setDisplayMode} />
         </ThemeProvider>
       </body>
     </html>

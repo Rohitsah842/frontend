@@ -1,11 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
 import { investmenttypeData } from '@/Assets/constants/investmentType'
 import { SelectChangeEvent } from '@mui/material/Select';
 import { get } from 'lodash'
-import { lumpsumAmmount } from '@/utils/lumpSumCal'
-import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { lineChartDataType } from '@/types/LineChartData'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'

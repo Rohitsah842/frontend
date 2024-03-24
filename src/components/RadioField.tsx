@@ -19,9 +19,9 @@ const RadioField = (props: RadioFieldPropsType) => {
                     value={props.value}
                     onChange={props.onchangeHandle}
                 >
-                    {props.fieldArray.map((element) =>
+                    {props.fieldArray.map((element, i) =>
                         <FormControlLabel
-                            key={element.label}
+                            key={i}
                             value={element.value}
                             name={element.name}
                             control={<Radio />}
