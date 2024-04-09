@@ -71,7 +71,7 @@ const Footer = (props: propsType) => {
                         </Stack>
                     </Grid>
                     <Grid xs={6} sm={6} md={4} lg={2.4}>
-                        <Typography variant="h6" color='text.primary'>Appearance</Typography>
+                        <Typography variant="h6" color='text.primary'>Background Mode</Typography>
                         <Stack direction="column" m={2} spacing={2} alignItems='center'>
                             <ToggleBtn value={props.modeValue} onChangeHandle={handlerChange} buttonArray={ToggleMode} />
                         </Stack>

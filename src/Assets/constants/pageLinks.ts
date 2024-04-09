@@ -47,10 +47,6 @@ export const profileLinks: PageLink[] = [
     title: "Dashboard",
     path: "/dashbord",
   },
-  {
-    title: "Logout",
-    path: "/logout",
-  },
 ];
 
 export const calculatorsLinks: PageLink[] = [

@@ -1,4 +1,6 @@
 "use client"
+import Cookies from 'universal-cookie';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -26,31 +28,44 @@ import GoogleIcon from '@/components/GoogleIcon';
 import githubIcon from "@/../public/images/github.png"
 import { LoginSchema } from '@/schemas/LoginSchema';
 import { ReactElement, useState } from 'react';
-import { Formik, useFormikContext } from 'formik';
+import { Formik, useFormikContext, FormikHelpers } from 'formik';
+import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
 
 
 const Login = (): ReactElement => {
+    const initialValue = { email: '', password: '' };
+    const config = { method: 'GET', url: 'http://localhost:8082/user' }
+    const cookies = new Cookies();
+
+    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, "/");
+    console.log(responseData, error, errormessage);
+
+
+    const onSubmitHandler = (values: typeof initialValue, action: FormikHelpers<typeof values>) => {
+        cookies.set("userdetails", JSON.stringify(values));
+        if (cookies.get("userdetails") !== null)
+            sendRequest();
+        action.resetForm();
+
+    }
     return (
         <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values, actions) => {
-                console.log(values)
-            }}
+            initialValues={initialValue}
             validationSchema={LoginSchema}
+            onSubmit={onSubmitHandler}
         >
-            <LoginForm />
+            <LoginForm error={error} ErrorMessage={errormessage} />
         </Formik>
     )
 }
 
 
 
-const LoginForm = () => {
+const LoginForm: React.FC<{ error: boolean, ErrorMessage: string }> = ({ error, ErrorMessage }) => {
 
     const [showPassword, setShowPassword] = useState(false)
+    const { handleSubmit } = useFormikContext();
 
-    const { values } = useFormikContext();
-    console.log(values)
 
 
     const theme = useTheme();
@@ -71,11 +86,12 @@ const LoginForm = () => {
                         <CardContent>
                             <Stack spacing={3} >
                                 <div>
+                                    {error && <Typography variant='body1' paragraph={true} sx={{ backgroundColor: "#e05248e6", textAlign: 'center' }} >{ErrorMessage}</Typography>}
                                     <Typography variant='h4' paragraph={true} >Login</Typography>
                                     <Typography>Don’t have an account? <AnchorLink path="/auth/signup" title='Sign up' color='rgb(250, 84, 28)' /></Typography>
                                 </div>
 
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <Stack spacing={3}>
                                         <InputField inputType='email' title='Email address' inputName='email' />
 

@@ -16,12 +16,17 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { calculatorsLinks, navLinks, profileLinks } from "@/Assets/constants/pageLinks"
 import { SIDE_NAV_WIDTH } from "@/Assets/constants";
 import NavLink from "@/components/navLink/NavLink";
 import SearchNavBar from "@/components/searchNavBar/SearchNavBar";
+import Link from 'next/link';
+import { useEffect } from 'react';
+import Cookies from "universal-cookie";
+import { loginContext } from '@/contexts/LoginContext';
 
 
 const Navbar = () => {
@@ -29,11 +34,17 @@ const Navbar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const [openDropdown, setOpenDropdown] = React.useState<null | HTMLElement>(null);
     const [isSideMenuOpen, setIsSideMenuOpen] = React.useState<boolean>(false);
-    const [isLogin, setIsLogin] = React.useState<boolean>(true);
+    const { state, dispatch } = React.useContext(loginContext);
 
+    const cookies = new Cookies();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+    useEffect(() => {
+        if (cookies.get("Authorization")) {
+            dispatch({ type: 'LOGIN', payload: true });
+        }
+    }, [])
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -41,6 +52,10 @@ const Navbar = () => {
     const handleOpenDropDown = (event: React.MouseEvent<HTMLElement>) => {
         setOpenDropdown(event.currentTarget);
     };
+    const handlerLogout = () => {
+        cookies.remove("Authorization");
+        dispatch({ type: "LOGOUT", payload: false });
+    }
 
 
     const handleCloseDropDown = () => {
@@ -74,10 +89,13 @@ const Navbar = () => {
                                     cursor: 'pointer'
                                 }}
                             >
-                                LOGO
+                                <Link href="/" style={{ color: `${theme.palette.text.primary}`, textDecoration: "none" }}>
+                                    LOGO
+                                </Link>
+
                             </Typography>
 
-                            {!isMobile && <Box key={'desktop'} sx={{ flexGrow: 1, display: 'flex' }}>
+                            {!isMobile && <Box sx={{ flexGrow: 1, display: 'flex' }}>
 
                                 {navLinks.map((link) => {
                                     if (link.title !== 'Calculators') {
@@ -128,8 +146,8 @@ const Navbar = () => {
                         </Toolbar>
 
                         <Box sx={{ display: "flex", alignItems: 'center' }}>
-                            <SearchNavBar />
-                            {!isLogin ? <NavLink path="/auth/login" title="Login" /> : <>
+                            <SearchNavBar dispatchFn={dispatch} />
+                            {!state.isLogin ? <NavLink path="/auth/login" title="Login" /> : <>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: "0px 10px" }}>
                                         <Avatar alt="Remy Sharp" src="" />
@@ -168,6 +186,10 @@ const Navbar = () => {
                                                 {profLink.title}</Typography>
                                         </MenuItem>
                                     ))}
+                                    <MenuItem onClick={() => handleCloseUserMenu()}>
+                                        <Button variant='text' sx={{ color: 'inherit' }} onClick={handlerLogout}>
+                                            Logout</Button>
+                                    </MenuItem>
                                 </Menu>
                             </>}
                         </Box>

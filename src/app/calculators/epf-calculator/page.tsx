@@ -67,7 +67,7 @@ const EPFCalculator = () => {
         setAxisData(data.asixLabel);
         setTotalContribution(calculateTotalContibution());
 
-    }, [initialValue])
+    }, [initialValue, totalContribution])
 
     const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 

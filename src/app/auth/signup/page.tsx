@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,89 +18,104 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Image from 'next/image';
 
 import facebookIcon from '@/../public/images/facebook.png'
 import GoogleIcon from '@/components/GoogleIcon';
 import githubIcon from "@/../public/images/github.png"
-import { SignupSchema } from '@/schemas/SignupSchema';
-
 import { ReactElement, useState } from 'react';
-import { Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, useFormikContext, FormikHelpers } from 'formik';
+import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
+import { SignupSchema } from '@/schemas/SignupSchema';
+import Loading from '@/components/Loading';
 
-const SignUp = (): ReactElement => {
-    const intialValue = {
-        fullName: "",
+
+const Login = (): ReactElement => {
+    const initialValue = {
+        fullname: "",
         email: "",
+        age: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        role: ''
     }
-    const onSubmitHandler = (values: typeof intialValue, action: FormikHelpers<typeof values>) => {
+    let config = { method: 'POST', url: 'http://localhost:8082/signup' }
 
-        console.log(values);
-        action.setSubmitting(false);
+    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, "/auth/login");
+
+
+
+    const onSubmitHandler = (values: typeof initialValue, action: FormikHelpers<typeof values>) => {
+        values = { ...values, "role": "USER" };
+        console.log(config);
+        sendRequest(values);
         action.resetForm();
-        console.log(values);
 
     }
-
     return (
         <Formik
-            enableReinitialize
-            initialValues={intialValue}
-            onSubmit={onSubmitHandler}
+            initialValues={initialValue}
             validationSchema={SignupSchema}
-            validateOnMount={true}
-
+            onSubmit={onSubmitHandler}
         >
-            <SignUpForm />
+            <LoginForm error={error} ErrorMessage={errormessage} isLoading={isLoading} />
         </Formik>
     )
 }
 
-const SignUpForm = () => {
+
+
+const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boolean }> = ({ error, ErrorMessage, isLoading }) => {
 
     const [showPassword, setShowPassword] = useState(false)
     const [showCnfPassword, setShowCnfPassword] = useState(false)
-    const { values, handleSubmit, resetForm } = useFormikContext();
+    const { handleSubmit } = useFormikContext();
+
 
 
     const theme = useTheme();
-
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-
+    // if (true) {
+    //     return <Loading />
+    // }
 
     return (
         <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: 'calc(100vh - 65px)' }}>
-
             <Grid container spacing={4}>
                 {isDesktop && <Grid item xs={12} md={8}>
                     <Box component="span">
-
                         <SVG />
                     </Box>
                 </Grid>
                 }
-                <Grid item xs={12} md={4} >
+                <Grid item xs={12} md={4} sx={{ marginTop: !isDesktop ? '-56px' : '0px' }}>
                     <Card sx={{ height: "maximum-content", boxShadow: "rgba(0, 0, 0, 0.24) -24px 24px 50px -20px", [theme.breakpoints.down('md')]: { textAlign: 'center' } }} >
                         <CardContent>
                             <Stack spacing={3} >
+
                                 <div>
-                                    <Typography variant='h4' paragraph={true} >Sign up</Typography>
-                                    <Typography>Already have an account? <AnchorLink path="/auth/login" title='Login' color='rgb(250, 84, 28)' /></Typography>
+                                    {error && <Typography variant='body1' paragraph={true} sx={{ backgroundColor: "#e05248e6", textAlign: 'center' }} >{ErrorMessage}</Typography>}
+                                    <Typography variant='h4' paragraph={true} >Login</Typography>
+                                    <Typography>Don’t have an account? <AnchorLink path="/auth/login" title='Login' color='rgb(250, 84, 28)' /></Typography>
                                 </div>
+
                                 <form onSubmit={handleSubmit}>
                                     <Stack spacing={3}>
                                         <InputField
                                             inputType='text'
                                             title='Full name'
-                                            inputName='fullName' />
+                                            inputName='fullname' />
                                         <InputField
                                             inputType='email'
                                             title='Email address'
                                             inputName='email' />
+                                        <InputField
+                                            inputType='number'
+                                            title='Age'
+                                            inputName='age' />
                                         <InputField
                                             inputType={!showPassword ? 'password' : 'text'}
                                             title='Password'
@@ -109,7 +124,7 @@ const SignUpForm = () => {
                                                 <InputAdornment position="end">
                                                     <IconButton
                                                         aria-label="toggle password visibility"
-                                                        onClick={() => { setShowPassword(!showPassword); resetForm() }}
+                                                        onClick={() => { setShowPassword(!showPassword); }}
 
                                                         edge="end"
                                                     >
@@ -132,6 +147,7 @@ const SignUpForm = () => {
                                                     </IconButton>
                                                 </InputAdornment>} />
                                         <FormButton title='Signup' btnType="submit" />
+
                                     </Stack>
                                 </form>
                                 <Divider>or continue with </Divider>
@@ -149,4 +165,4 @@ const SignUpForm = () => {
     )
 }
 
-export default SignUp;
+export default Login
