@@ -7,7 +7,9 @@ import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { loginContext } from "@/contexts/LoginContext";
+import { get } from "lodash";
 
+axios.defaults.baseURL = "http://localhost:8082";
 export const useAxiosRequestHelper = <T>(
   config: AxiosRequestConfig<any>,
   isStartLoading: boolean = true,
@@ -29,8 +31,8 @@ export const useAxiosRequestHelper = <T>(
     "Content-Type": "application/json",
   };
 
-  const [resData, setResData] = useState<any>([]);
-  const [errormessage, setErrorMessage] = useState<any>();
+  const [resData, setResData] = useState<any>({});
+  const [errormessage, setErrorMessage] = useState<any>({});
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -66,24 +68,27 @@ export const useAxiosRequestHelper = <T>(
       const response = await axios(config);
 
       setIsLoading(false);
-      console.log(response);
-      console.log(response.headers);
-      if (response.headers.authorization !== null) {
+
+      if (response.request.responseURL === "http://localhost:8082/user") {
         const decodeJwt = jwtDecode(response.headers.authorization);
         cookies.set("Authorization", response.headers.authorization, {
           expires: new Date(decodeJwt.exp! * 1000),
         });
+        cookies.set("RefreshToken", response.headers.refreshtoken);
         dispatch({ type: "LOGIN", payload: true });
         cookies.remove("userdetails");
+        console.log(cookies.get("userdetails"));
       }
-      setResData(response.data);
+      setResData(response);
 
       router.push(path!);
     } catch (error) {
+      console.log(error);
+
       cookies.remove("userdetails");
       setIsLoading(false);
       setError(true);
-      // setErrorMessage(error.response.data.message);
+      setErrorMessage(get(error, `response.data.message`));
     }
   };
 

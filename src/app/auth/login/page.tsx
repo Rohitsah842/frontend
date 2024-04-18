@@ -34,10 +34,10 @@ import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
 
 const Login = (): ReactElement => {
     const initialValue = { email: '', password: '' };
-    const config = { method: 'GET', url: 'http://localhost:8082/user' }
+    const config = { method: 'GET', url: '/user' }
     const cookies = new Cookies();
 
-    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, "/");
+    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false);
     console.log(responseData, error, errormessage);
 
 
@@ -45,7 +45,7 @@ const Login = (): ReactElement => {
         cookies.set("userdetails", JSON.stringify(values));
         if (cookies.get("userdetails") !== null)
             sendRequest();
-        action.resetForm();
+        // action.resetForm();
 
     }
     return (
@@ -107,7 +107,7 @@ const LoginForm: React.FC<{ error: boolean, ErrorMessage: string }> = ({ error, 
                                                         {showPassword ? <VisibilityOff /> : <Visibility />}
                                                     </IconButton>
                                                 </InputAdornment>} />
-                                        <Typography component={'span'} sx={{ textAlign: 'right' }}><AnchorLink path="/auth/forgetpassword" title='Forgot Password?' /></Typography>
+                                        <Typography component={'span'} sx={{ textAlign: 'right' }}><AnchorLink path="/auth/forgetpassword" title='Forgot Password?' color='inherit' /></Typography>
                                         <FormButton title='Login' btnType='submit' />
                                     </Stack>
                                 </form>

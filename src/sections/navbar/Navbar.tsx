@@ -54,6 +54,7 @@ const Navbar = () => {
     };
     const handlerLogout = () => {
         cookies.remove("Authorization");
+        cookies.remove("RefreshToken");
         dispatch({ type: "LOGOUT", payload: false });
     }
 

@@ -1,4 +1,4 @@
-import { passwordRegex } from "@/Assets/constants";
+import { passwordRegex, MobileNoRegex } from "@/Assets/constants";
 import * as yup from "yup";
 
 export const SignupSchema = yup.object().shape({
@@ -8,7 +8,12 @@ export const SignupSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email")
     .required("This field is required"),
-
+  mobileNo: yup
+    .string()
+    .matches(MobileNoRegex, {
+      message: "Please enter a valid mobile no with country code",
+    })
+    .required("This field is required"),
   age: yup
     .number()
     .required("This field is required")

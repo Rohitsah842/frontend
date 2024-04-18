@@ -32,10 +32,11 @@ import { SignupSchema } from '@/schemas/SignupSchema';
 import Loading from '@/components/Loading';
 
 
-const Login = (): ReactElement => {
+const Signup = (): ReactElement => {
     const initialValue = {
         fullname: "",
         email: "",
+        mobileNo: "",
         age: "",
         password: "",
         confirmPassword: "",
@@ -45,29 +46,30 @@ const Login = (): ReactElement => {
 
     const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, "/auth/login");
 
-
+    console.log(responseData);
 
     const onSubmitHandler = (values: typeof initialValue, action: FormikHelpers<typeof values>) => {
         values = { ...values, "role": "USER" };
-        console.log(config);
         sendRequest(values);
         action.resetForm();
 
     }
+    console.log(errormessage);
+
     return (
         <Formik
             initialValues={initialValue}
             validationSchema={SignupSchema}
             onSubmit={onSubmitHandler}
         >
-            <LoginForm error={error} ErrorMessage={errormessage} isLoading={isLoading} />
+            <LoginForm error={error} ErrorMessage={errormessage} isLoading={isLoading} response={responseData.data} />
         </Formik>
     )
 }
 
 
 
-const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boolean }> = ({ error, ErrorMessage, isLoading }) => {
+const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boolean, response: string }> = ({ error, ErrorMessage, isLoading, response }) => {
 
     const [showPassword, setShowPassword] = useState(false)
     const [showCnfPassword, setShowCnfPassword] = useState(false)
@@ -78,15 +80,18 @@ const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boo
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
+    if (response) {
+        alert(response);
+    }
     // if (true) {
     //     return <Loading />
     // }
 
     return (
-        <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: 'calc(100vh - 65px)' }}>
+        <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: 'auto', marginTop: '68px' }}>
             <Grid container spacing={4}>
-                {isDesktop && <Grid item xs={12} md={8}>
-                    <Box component="span">
+                {isDesktop && <Grid item xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box component="span" >
                         <SVG />
                     </Box>
                 </Grid>
@@ -98,7 +103,7 @@ const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boo
 
                                 <div>
                                     {error && <Typography variant='body1' paragraph={true} sx={{ backgroundColor: "#e05248e6", textAlign: 'center' }} >{ErrorMessage}</Typography>}
-                                    <Typography variant='h4' paragraph={true} >Login</Typography>
+                                    <Typography variant='h4' paragraph={true} >Sign up</Typography>
                                     <Typography>Don’t have an account? <AnchorLink path="/auth/login" title='Login' color='rgb(250, 84, 28)' /></Typography>
                                 </div>
 
@@ -112,6 +117,10 @@ const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boo
                                             inputType='email'
                                             title='Email address'
                                             inputName='email' />
+                                        <InputField
+                                            inputType='string'
+                                            title='Mobile no'
+                                            inputName='mobileNo' />
                                         <InputField
                                             inputType='number'
                                             title='Age'
@@ -165,4 +174,4 @@ const LoginForm: React.FC<{ error: boolean, ErrorMessage: string, isLoading: boo
     )
 }
 
-export default Login
+export default Signup
