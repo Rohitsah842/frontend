@@ -7,6 +7,7 @@ import { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
+import { sliderEventProps } from '@/types/Global'
 
 const CarLoanEMI = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -73,8 +74,8 @@ const CarLoanEMI = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
 
@@ -85,7 +86,7 @@ const CarLoanEMI = () => {
             isStartAdornment: true,
             name: 'Loan_amount',
             min: 10000,
-            max: 5000000,
+            max: 50000000,
             stepSize: 100,
             title: 'Amount you need',
             endormentIcon: '₹',
@@ -97,12 +98,12 @@ const CarLoanEMI = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 30,
+            max: 40,
             stepSize: 0.1,
             endormentIcon: '%',
-            isDisable: true,
+            onChangeHandle: handlerChange,
+            onChangeSliderHandler: handlerChangeSlider,
             value: initialValue.interest,
-            isSliderHide: true,
             title: 'Interest rate (% PA)'
         },
         {
@@ -148,7 +149,7 @@ const CarLoanEMI = () => {
             totalValueArray={totalValueData}
             tableData={{ columns: columns, data: EMITableData }}
             donoutChartData={{ chartData: donoutChartData }}
-            lineChartData={{ chartData: lineChartdata, axisData: axisData, axisLabel: "Year" }}
+            lineChartData={{ chartData: lineChartdata, axisData: axisData, axisLabel: "Month" }}
         />
     )
 }

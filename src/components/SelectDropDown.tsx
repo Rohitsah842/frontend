@@ -4,7 +4,7 @@ import { dropDownTypes } from '@/types/SelectDropDown'
 
 const SelectDropDown = ({ value, onChangeHandler, menuItems }: dropDownTypes) => {
     return (
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <FormControl variant="standard" sx={{ m: 3, minWidth: 150 }}>
             <InputLabel id="demo-simple-select-standard-label">Investment type</InputLabel>
             <Select
                 labelId="demo-simple-select-standard-label"

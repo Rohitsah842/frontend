@@ -29,7 +29,7 @@ const CalculatorCard = ({ title, path, bodyText, imgSrc }: PageLink) => {
                             <Typography variant="body2" color="text.secondary">
                                 {bodyText}
                             </Typography>
-                            <Image src={imgSrc} alt='dflt' height={100} width={280} style={{ opacity: "0.4" }} />
+                            <Image src={imgSrc} alt='dflt' height={100} width={280} style={{ opacity: "0.8" }} />
                         </CardContent>
                     </Card>
                 </Link>

@@ -6,6 +6,7 @@ import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
+import { sliderEventProps } from '@/types/Global'
 
 const PPFCalculator = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -54,7 +55,7 @@ const PPFCalculator = () => {
         setTotalAmount(data.SIPTotalValue);
         setPpfTableData(data.SIPTableData);
 
-        let chartData = sipLineChartDataCal(initialValue.yearly_investment, initialValue.interest, 1, "SIP");
+        let chartData = sipLineChartDataCal(initialValue.yearly_investment, initialValue.interest, 1, initialValue.time, "SIP");
 
         setLineChartdata(chartData.lineChartData)
         setAxisData(chartData.xAxisData);
@@ -67,8 +68,8 @@ const PPFCalculator = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [

@@ -8,6 +8,8 @@ import { dollarIndianLocale } from '@/Assets/constants';
 import RadioField from '@/components/RadioField';
 import { InputSliderprops } from '@/types/InputSliderProps';
 import { hraCalculate } from '@/utils/hraCalculate';
+import CalculatorComponent from '@/components/CalculatorComponent';
+import { sliderEventProps } from '@/types/Global';
 
 const HRACalculator = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -41,8 +43,8 @@ const HRACalculator = () => {
         SetInitialValue({ ...initialValue, [event.currentTarget.name]: event.currentTarget.value })
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
 
@@ -120,8 +122,8 @@ const HRACalculator = () => {
 
 
     return (
-        <Container maxWidth='xl' sx={{ height: 'calc(100vh - 65px)', padding: '1rem' }}>
-            <Box sx={{ lg: { m: "10px" }, height: '100vh' }}>
+        <Container maxWidth='xl' sx={{ height: 'calc(100% - 65px)', padding: '1rem' }}>
+            <Box sx={{ lg: { m: "10px" } }}>
                 <Stack direction="row" sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h5" color="inherit" >HRA Calculator</Typography>
                 </Stack >
@@ -149,22 +151,18 @@ const HRACalculator = () => {
                                     onchangeHandle={handlerChange}
                                     fieldArray={radioFieldArray}
                                 />
+                                <Stack spacing={4}>
+                                    {totalValueData.map((value, i) => {
+                                        return (<FlexWrapper key={i}>
+                                            <Typography variant='body1' color="inherit" ><b>{value.title} </b></Typography>
+                                            <Typography variant="body1" color="inherit" ><b> ₹ {dollarIndianLocale.format(value.value)} </b></Typography>
+                                        </FlexWrapper>)
+                                    })}
+
+                                </Stack>
                             </Stack>
                         </Paper>
                         <DonoutChart chartData={donoutChartData} />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Paper elevation={3}>
-                            <Stack spacing={4}>
-                                {totalValueData.map((value, i) => {
-                                    return (<FlexWrapper key={i}>
-                                        <Typography variant='body1' color="inherit" ><b>{value.title} </b></Typography>
-                                        <Typography variant="body1" color="inherit" ><b> ₹ {dollarIndianLocale.format(value.value)} </b></Typography>
-                                    </FlexWrapper>)
-                                })}
-
-                            </Stack>
-                        </Paper>
                     </Grid>
 
                 </Grid>

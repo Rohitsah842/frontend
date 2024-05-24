@@ -6,6 +6,7 @@ import { lumpsumAmmount, lumpsumTableDataType } from '@/utils/lumpSumCal'
 import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
+import { sliderEventProps } from '@/types/Global'
 
 const FixedDeposit = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -14,6 +15,7 @@ const FixedDeposit = () => {
         time: 3
 
     })
+
 
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const [fixedDepositTableData, setfixedDepositTableData] = useState<lumpsumTableDataType[]>([])
@@ -53,7 +55,7 @@ const FixedDeposit = () => {
         setTotalAmount(data.totalValue);
         setfixedDepositTableData(data.lumpsumData);
 
-        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 1, "Lumpsum");
+        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 1, initialValue.time, "Lumpsum");
 
         setLineChartdata(chartData.lineChartData)
         setAxisData(chartData.xAxisData);
@@ -69,8 +71,8 @@ const FixedDeposit = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [
@@ -79,7 +81,7 @@ const FixedDeposit = () => {
             title: 'Total investment',
             name: 'investment_amount',
             min: 10000,
-            max: 500000,
+            max: 1000000,
             stepSize: 100,
             endormentIcon: '₹',
             onChangeHandle: handlerChange,
@@ -90,7 +92,7 @@ const FixedDeposit = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 15,
+            max: 30,
             stepSize: 0.1,
             endormentIcon: '%',
             value: initialValue.interest,
@@ -102,7 +104,7 @@ const FixedDeposit = () => {
             isStartAdornment: false,
             name: 'time',
             min: 1,
-            max: 40,
+            max: 50,
             stepSize: 1,
             endormentIcon: 'Yr.',
             onChangeHandle: handlerChange,

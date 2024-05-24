@@ -6,6 +6,7 @@ import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
+import { sliderEventProps } from '@/types/Global'
 
 const RecurringDeposit = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -53,7 +54,7 @@ const RecurringDeposit = () => {
         setTotalAmount(data.SIPTotalValue);
         setRecurringDepositTableData(data.SIPTableData);
 
-        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 12, "SIP");
+        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 12, initialValue.time, "SIP");
 
         setLineChartdata(chartData.lineChartData)
         setAxisData(chartData.xAxisData);
@@ -67,8 +68,8 @@ const RecurringDeposit = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [

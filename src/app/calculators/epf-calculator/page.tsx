@@ -5,6 +5,7 @@ import { lineChartDataType } from '@/types/LineChartData'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import { epfCalculation, epfDataType } from '@/utils/epfCal'
+import { sliderEventProps } from '@/types/Global'
 
 const EPFCalculator = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -40,7 +41,7 @@ const EPFCalculator = () => {
             header: "Employer Contribution (₹)"
         },
         {
-            key: 'interesttEarn',
+            key: 'interestEarn',
             header: "Interest Earn (₹)"
         },
         {
@@ -75,8 +76,8 @@ const EPFCalculator = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const calculateTotalContibution = (): number => {

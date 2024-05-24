@@ -5,6 +5,7 @@ import { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
+import { sliderEventProps } from '@/types/Global'
 
 
 
@@ -69,8 +70,8 @@ const SWPCalculator = () => {
         SetInitialInvestment({ ...initialValue, [event.currentTarget.name]: event.currentTarget.value })
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialInvestment({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialInvestment({ ...initialValue, [name]: value })
     }
 
     const calculateTotalInterestEarn = (swpData: SwpTableDataType[]): number => {
@@ -168,7 +169,7 @@ const SWPCalculator = () => {
             totalValueArray={totalValueData}
             tableData={{ columns: columns, data: swpTableData }}
             donoutChartData={{ chartData: donoutChartData }}
-            lineChartData={{ chartData: lineChartdata, axisData: axisLabel, axisLabel: "Year" }}
+            lineChartData={{ chartData: lineChartdata, axisData: axisLabel, axisLabel: "Month" }}
         />
     )
 }

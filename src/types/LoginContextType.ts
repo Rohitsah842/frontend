@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { InitialStateType } from "./LoginContextType";
 export enum LoginActionKind {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",

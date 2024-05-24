@@ -6,6 +6,7 @@ import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { SIPTableDataType, sipInterestAmt } from '@/utils/sipInterestCal'
+import { sliderEventProps } from '@/types/Global'
 
 const NationalPensionScheme = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -57,7 +58,7 @@ const NationalPensionScheme = () => {
         setTotalAmount(data.SIPTotalValue);
         setNationalPensionTableData(data.SIPTableData);
 
-        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 12, "SIP");
+        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 12, (+initialValue.investmentTillAge - +initialValue.currentAge), "SIP");
 
         setLineChartdata(chartData.lineChartData)
         setAxisData(chartData.xAxisData);
@@ -71,8 +72,8 @@ const NationalPensionScheme = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [

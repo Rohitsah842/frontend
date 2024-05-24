@@ -18,14 +18,14 @@ import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
 const ForgetPassword = () => {
     const initialValue = { email: '', mobileNo: '', newPassword: "", confirmPassword: "" };
     const [isUserVerified, setIsUserVerified] = useState<boolean>(false);
-    const [URL, setURL] = useState<string>('http://localhost:8082/verify-user');
-    let config = { method: 'POST', url: URL }
+    const [URL, setURL] = useState<string>('auth/details');
+    let config = { method: 'POST', url: URL, withCredentials: true }
 
     const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, '/auth/login');
 
     if (responseData.status === 202 && !isUserVerified) {
         setIsUserVerified(true)
-        setURL('http://localhost:8082/forget-password')
+        setURL('/forget-password')
     }
 
 
@@ -75,7 +75,7 @@ const ForgetPasswordForm: React.FC<{ error: boolean, ErrorMessage: string, respo
                         <Typography variant="body1" color={theme.palette.text.secondary}>Please enter the email address associated with your account and We will email you a link to reset your password.</Typography>
                         <form onSubmit={handleSubmit}>
                             {!isUserVerified && <Stack spacing={3}>
-                                <InputField inputType='email' title='Email address' inputName='email' />
+                                <InputField inputType='text' title='Email address' inputName='email' />
                                 <Divider>OR</Divider>
                                 <InputField inputType='text' title='Mobile No' inputName='mobileNo' isRequired={false} />
                                 <FormButton title='Reset Password' btnType='submit' />

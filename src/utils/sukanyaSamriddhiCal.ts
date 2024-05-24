@@ -8,6 +8,15 @@ export interface sukanyaTableDataType {
   totalAmount: number;
 }
 
+/**
+ *
+ * @param depositeAmount
+ * @param interest
+ * @param startYear
+ * @param noOfPayment
+ * @returns
+ */
+
 export const sukanyaSamriddhiYojanaCal = (
   depositeAmount: number,
   interest: number,

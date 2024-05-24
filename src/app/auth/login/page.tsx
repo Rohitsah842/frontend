@@ -34,10 +34,10 @@ import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
 
 const Login = (): ReactElement => {
     const initialValue = { email: '', password: '' };
-    const config = { method: 'GET', url: '/user' }
+    const config = { method: 'GET', url: '/user', withCredentials: true }
     const cookies = new Cookies();
 
-    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false);
+    const [responseData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false, "/");
     console.log(responseData, error, errormessage);
 
 

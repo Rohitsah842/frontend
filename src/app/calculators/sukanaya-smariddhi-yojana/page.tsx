@@ -10,6 +10,7 @@ import { InputSliderprops } from '@/types/InputSliderProps'
 import { investmenttypeData } from '@/Assets/constants/investmentType'
 import { get } from 'lodash'
 import { sukanyaSamriddhiYojanaCal, sukanyaTableDataType } from '@/utils/sukanyaSamriddhiCal';
+import { sliderEventProps } from '@/types/Global';
 
 const SukanyaSamriddhiYojna = () => {
 
@@ -81,8 +82,8 @@ const SukanyaSamriddhiYojna = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
     const handlerChangeSelect = (event: SelectChangeEvent) => {
         setInvestmentType(event.target.value)

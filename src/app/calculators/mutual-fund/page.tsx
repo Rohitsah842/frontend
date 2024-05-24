@@ -6,6 +6,7 @@ import { lumpsumAmmount, lumpsumTableDataType } from '@/utils/lumpSumCal'
 import { sipLineChartDataCal } from '@/utils/sipLineChartDataCal'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
+import { sliderEventProps } from '@/types/Global'
 
 const MutualFundCalculator = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -53,7 +54,7 @@ const MutualFundCalculator = () => {
         setTotalAmount(data.totalValue);
         setmutualFundTableData(data.lumpsumData);
 
-        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 1, "Lumpsum");
+        let chartData = sipLineChartDataCal(initialValue.investment_amount, initialValue.interest, 1, initialValue.time, "Lumpsum");
 
         setLineChartdata(chartData.lineChartData)
         setAxisData(chartData.xAxisData);
@@ -69,8 +70,8 @@ const MutualFundCalculator = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [
@@ -79,7 +80,7 @@ const MutualFundCalculator = () => {
             title: 'Total investment',
             name: 'investment_amount',
             min: 10000,
-            max: 5000000,
+            max: 10000000,
             stepSize: 100,
             endormentIcon: '₹',
             onChangeHandle: handlerChange,
@@ -90,7 +91,7 @@ const MutualFundCalculator = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 30,
+            max: 50,
             stepSize: 0.1,
             endormentIcon: '%',
             value: initialValue.interest,
@@ -102,7 +103,7 @@ const MutualFundCalculator = () => {
             isStartAdornment: false,
             name: 'time',
             min: 1,
-            max: 40,
+            max: 50,
             stepSize: 1,
             endormentIcon: 'Yr.',
             onChangeHandle: handlerChange,

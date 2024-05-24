@@ -27,6 +27,8 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import Cookies from "universal-cookie";
 import { loginContext } from '@/contexts/LoginContext';
+import PopOver from '@/components/PopOver';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 
 const Navbar = () => {
@@ -55,6 +57,7 @@ const Navbar = () => {
     const handlerLogout = () => {
         cookies.remove("Authorization");
         cookies.remove("RefreshToken");
+        cookies.remove("XSRF-TOKEN");
         dispatch({ type: "LOGOUT", payload: false });
     }
 
@@ -104,43 +107,9 @@ const Navbar = () => {
                                     } else {
                                         return (
                                             <>
-                                                <IconButton key={link.title} onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
-                                                    Calculators<ArrowDropDownIcon />
-                                                </IconButton>
-                                                <Menu
-                                                    sx={{ mt: '45px' }}
-                                                    id="dropDown-bar"
-                                                    anchorEl={openDropdown}
-                                                    anchorOrigin={{
-                                                        vertical: 'top',
-                                                        horizontal: 'right',
-                                                    }}
-                                                    keepMounted
-                                                    transformOrigin={{
-                                                        vertical: 'top',
-                                                        horizontal: 'right',
-                                                    }}
-                                                    transitionDuration="auto"
-                                                    open={Boolean(openDropdown)}
-                                                    onClose={handleCloseDropDown}
-                                                >
-                                                    {calculatorsLinks.map((profLink) => (
-                                                        <MenuItem key={profLink.title} onClick={() => handleCloseDropDown()} href=''>
-                                                            <Typography
-                                                                textAlign="center"
-                                                                component="a"
-                                                                href={profLink.path}
-                                                                sx={{
-                                                                    color: 'inherit',
-                                                                    textDecoration: 'none',
-                                                                    width: '100%'
-                                                                }}
-                                                            >
-                                                                {profLink.title}</Typography>
-                                                        </MenuItem>
-                                                    ))}
-                                                </Menu>
-                                            </>)
+                                                <PopOver key={link.title} calculatorsLinks={calculatorsLinks} path={link.path} />
+                                            </>
+                                        )
                                     }
                                 })}
                             </Box>}
@@ -214,10 +183,11 @@ const Navbar = () => {
                                     return (
                                         <>
                                             <IconButton onClick={handleOpenDropDown} sx={{ p: "5px 15px", fontSize: "1rem", borderRadius: 'initial', color: theme.palette.text.primary }}>
-                                                Calculators<ArrowDropDownIcon />
+                                                Calculators
+                                                {!Boolean(openDropdown) ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
                                             </IconButton>
                                             <Menu
-                                                sx={{ mt: '45px' }}
+                                                sx={{ mt: '60px' }}
                                                 id="dropDown-bar"
                                                 anchorEl={openDropdown}
                                                 anchorOrigin={{

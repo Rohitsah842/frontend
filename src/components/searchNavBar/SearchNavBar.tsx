@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from "react";
+import { KeyboardEventHandler, ReactElement, useRef } from "react";
 
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -50,12 +50,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchNavBar = ({ dispatchFn }: any): ReactElement => {
 
-  const searchref = useRef<HTMLInputElement>(null);
-  const handlerClick = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const searchref = useRef<HTMLInputElement>();
+  const handlerClick = (key: string) => {
+    if (key === 'Enter') {
       console.log(searchref.current?.value);
       dispatchFn({ type: "SEARCH", payload: searchref.current?.value });
-      searchref.current.value = "";
     }
   }
 
@@ -71,7 +70,7 @@ const SearchNavBar = ({ dispatchFn }: any): ReactElement => {
         inputRef={searchref}
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
-        onKeyDown={handlerClick}
+        onKeyDown={(e) => handlerClick(e.key)}
 
       />
     </Search>

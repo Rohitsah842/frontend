@@ -36,7 +36,7 @@ const CustomTable = <T extends Record<string, any>, K extends keyof T>({ data, c
 
 
     return (
-        <TableContainer component={Paper} sx={{ overflowX: 'auto', my: '20px' }}>
+        <TableContainer component={Paper} sx={{ overflowX: 'auto', my: '20px', marginLeft: '8px', width: "auto" }}>
 
             <Table sx={{ minWidth: 650 }} aria-label="EMI table">
                 <TableHead>

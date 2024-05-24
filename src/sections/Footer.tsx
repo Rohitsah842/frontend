@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+
 import moment from 'moment'
 
 import { Box, Divider } from '@mui/material'
@@ -9,19 +9,23 @@ import Stack from '@mui/material/Stack'
 import Link from '@/components/Link'
 import { Email, Facebook, GitHub, Home, Instagram, LinkedIn, Mail, Phone, Telegram, Twitter, Brightness4 } from '@mui/icons-material'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import { modeType } from '@/app/layout'
+
 import ToggleBtn from '@/components/ToggleButton'
 
 type propsType = {
-    modeValue: modeType,
-    setModeValue: (value: modeType) => void
+    modeValue: string,
+    setModeValue: (value: string) => void
 }
 
 const Footer = (props: propsType) => {
 
-    const handlerChange = (event: React.MouseEvent<HTMLElement>, newValue: modeType,) => {
-        console.log(event, newValue);
+    const handleThemeChange = (event: React.MouseEvent<HTMLElement>, newValue: string,) => {
+        try {
+            localStorage.setItem('theme', newValue)
+        } catch (error) {
+            console.log(error);
 
+        }
         props.setModeValue(newValue);
     }
 
@@ -49,7 +53,7 @@ const Footer = (props: propsType) => {
                 <Grid container spacing={2} sx={{ padding: '20px' }}>
                     <Grid xs={12} sm={6} md={4} lg={2.4}>
                         <Typography variant="h5" color='text.primary'>Logo</Typography>
-                        <Typography variant="body1" color='text.secondary'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis debitis aperiam voluptas eveniet at!</Typography>
+                        <Typography variant="body1" color='text.secondary'>Loremmm ipsum kkk sit, amet consectetur adipisicing elit. Blanditiis debitis aperiam voluptas eveniet at!</Typography>
                     </Grid>
                     <Grid xs={6} sm={6} md={4} lg={2.4} >
                         <Typography variant="h6" color='text.primary'>Pages</Typography>
@@ -73,7 +77,7 @@ const Footer = (props: propsType) => {
                     <Grid xs={6} sm={6} md={4} lg={2.4}>
                         <Typography variant="h6" color='text.primary'>Background Mode</Typography>
                         <Stack direction="column" m={2} spacing={2} alignItems='center'>
-                            <ToggleBtn value={props.modeValue} onChangeHandle={handlerChange} buttonArray={ToggleMode} />
+                            <ToggleBtn value={props.modeValue} onChangeHandle={handleThemeChange} buttonArray={ToggleMode} />
                         </Stack>
                     </Grid>
                     <Grid xs={6} sm={6} md={4} lg={2.4} alignItems='center'>

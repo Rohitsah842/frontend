@@ -8,6 +8,7 @@ import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import { ColumnDefinitionType } from '@/components/CustomTable';
 import { lumpsumSIPCal, lumpsumSIPTableDataType } from '@/utils/lumpsumSIPCal';
+import { sliderEventProps } from '@/types/Global';
 
 const LumpsumSIPCalculator = () => {
     const [initialValue, SetInitialInvestment] = useState({
@@ -73,8 +74,8 @@ const LumpsumSIPCalculator = () => {
         SetInitialInvestment({ ...initialValue, [event.currentTarget.name]: event.currentTarget.value })
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialInvestment({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialInvestment({ ...initialValue, [name]: value })
     }
 
     const handlerChangeSelect = (event: SelectChangeEvent) => {
@@ -87,7 +88,7 @@ const LumpsumSIPCalculator = () => {
             title: get(investmenttypeData, `${investmentType}.title`),
             name: 'intervalInvestment',
             min: 500,
-            max: 100000,
+            max: 1000000,
             stepSize: 500,
             endormentIcon: '₹',
             onChangeSliderHandler: handlerChangeSlider,
@@ -99,8 +100,8 @@ const LumpsumSIPCalculator = () => {
             isStartAdornment: true,
             title: "Onetime investment amount",
             name: 'oneTimeInvestment',
-            min: 5000,
-            max: 500000,
+            min: 0,
+            max: 5000000,
             stepSize: 500,
             endormentIcon: '₹',
             onChangeSliderHandler: handlerChangeSlider,
@@ -112,7 +113,7 @@ const LumpsumSIPCalculator = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 30,
+            max: 50,
             stepSize: 0.1,
             endormentIcon: '%',
             onChangeHandle: handlerChange,
@@ -124,7 +125,7 @@ const LumpsumSIPCalculator = () => {
             isStartAdornment: false,
             name: 'time',
             min: 1,
-            max: 40,
+            max: 50,
             stepSize: 1,
             endormentIcon: 'Yr.',
             onChangeHandle: handlerChange,

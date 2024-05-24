@@ -5,12 +5,12 @@ import Paper from '@mui/material/Paper'
 
 const LineChartGraph = ({ axisLabel = "Month", ...props }: lineChartType) => {
     return (
-        <Paper elevation={3} sx={{ width: '100%', height: '100%' }}>
+        <Paper elevation={1} sx={{ width: '100%', height: '100%' }}>
             <LineChart
 
                 sx={{ width: '100%' }}
                 height={500}
-                margin={{ left: 80, bottom: 70 }}
+                margin={{ left: 100, bottom: 70 }}
                 series={
                     props.dataValue
                 }
@@ -27,6 +27,7 @@ const LineChartGraph = ({ axisLabel = "Month", ...props }: lineChartType) => {
 
                     },
                 }}
+            // grid={{ vertical: true, horizontal: true }}
             />
         </Paper>
     )

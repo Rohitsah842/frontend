@@ -10,6 +10,7 @@ import { lineChartDataType } from '@/types/LineChartData'
 import CalculatorComponent from '@/components/CalculatorComponent'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import { ColumnDefinitionType } from '@/components/CustomTable';
+import { sliderEventProps } from '@/types/Global';
 
 const SIPCalculator = () => {
     const [initialInvestment, SetInitialInvestment] = useState({
@@ -69,7 +70,7 @@ const SIPCalculator = () => {
             setToalPrinciple(initialInvestment.amount * get(investmenttypeData, `${investmentType}.noOfPayment`, 0))
         }
 
-        const lineData = sipLineChartDataCal(initialInvestment.amount, initialInvestment.interest, get(investmenttypeData, `${investmentType}.noOfPayment`, 0), get(investmenttypeData, `${investmentType}.type`));
+        const lineData = sipLineChartDataCal(initialInvestment.amount, initialInvestment.interest, get(investmenttypeData, `${investmentType}.noOfPayment`, 0), initialInvestment.time, get(investmenttypeData, `${investmentType}.type`));
         setLineChartdata(lineData.lineChartData);
         setAxisData(lineData.xAxisData);
 
@@ -81,8 +82,8 @@ const SIPCalculator = () => {
         SetInitialInvestment({ ...initialInvestment, [event.currentTarget.name]: event.currentTarget.value })
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialInvestment({ ...initialInvestment, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialInvestment({ ...initialInvestment, [name]: value })
     }
 
     const handlerChangeSelect = (event: SelectChangeEvent) => {
@@ -95,7 +96,7 @@ const SIPCalculator = () => {
             title: get(investmenttypeData, `${investmentType}.title`),
             name: 'amount',
             min: 500,
-            max: 100000,
+            max: 10000000,
             stepSize: 50,
             endormentIcon: '₹',
             onChangeSliderHandler: handlerChangeSlider,
@@ -107,7 +108,7 @@ const SIPCalculator = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 30,
+            max: 50,
             stepSize: 0.1,
             endormentIcon: '%',
             onChangeHandle: handlerChange,
@@ -120,7 +121,7 @@ const SIPCalculator = () => {
             isStartAdornment: false,
             name: 'time',
             min: 1,
-            max: 40,
+            max: 50,
             stepSize: 1,
             endormentIcon: 'Yr.',
             onChangeHandle: handlerChange,

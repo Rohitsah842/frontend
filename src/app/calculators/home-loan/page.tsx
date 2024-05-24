@@ -7,6 +7,7 @@ import { ColumnDefinitionType } from '@/components/CustomTable'
 import { lineChartDataType } from '@/types/LineChartData'
 import { InputSliderprops } from '@/types/InputSliderProps'
 import CalculatorComponent from '@/components/CalculatorComponent'
+import { sliderEventProps } from '@/types/Global'
 
 const HomeLoanEMI = () => {
     const [initialValue, SetInitialValue] = useState({
@@ -73,8 +74,8 @@ const HomeLoanEMI = () => {
 
     }
 
-    const handlerChangeSlider = (event: React.ChangeEvent<HTMLInputElement>) => {
-        !!event.target && SetInitialValue({ ...initialValue, [event.target.name]: event.target.value })
+    const handlerChangeSlider = ({ name, value }: sliderEventProps) => {
+        !!name && SetInitialValue({ ...initialValue, [name]: value })
     }
 
     const inputSliderData: InputSliderprops[] = [
@@ -82,7 +83,7 @@ const HomeLoanEMI = () => {
             isStartAdornment: true,
             name: 'Loan_amount',
             min: 10000,
-            max: 5000000,
+            max: 10000000,
             stepSize: 100,
             title: 'Amount you need',
             endormentIcon: '₹',
@@ -94,19 +95,19 @@ const HomeLoanEMI = () => {
             isStartAdornment: false,
             name: 'interest',
             min: 1,
-            max: 30,
+            max: 40,
             stepSize: 0.1,
             endormentIcon: '%',
-            isDisable: true,
+            onChangeHandle: handlerChange,
+            onChangeSliderHandler: handlerChangeSlider,
             value: initialValue.interest,
-            isSliderHide: true,
             title: 'Interest rate (% PA)'
         },
         {
             isStartAdornment: false,
             name: 'time',
             min: 1,
-            max: 40,
+            max: 50,
             stepSize: 1,
             endormentIcon: 'Yr.',
             onChangeHandle: handlerChange,

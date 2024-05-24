@@ -6,8 +6,10 @@ import Box from '@mui/material/Box';
 import Navbar from '@/sections/navbar/Navbar';
 import Footer from '@/sections/Footer'
 import "./globals.css";
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LoginContext from '@/contexts/LoginContext';
+import Cookies from "universal-cookie";
+import { useAxiosRequestHelper } from '@/hooks/useAxiosHelper';
 
 
 export type modeType = "light" | "dark"
@@ -24,16 +26,35 @@ function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  let preSelectedTheme;
+  try {
+    preSelectedTheme = localStorage.getItem('theme') as modeType;
+  } catch (error) {
+    console.log(error);
 
+  }
+  const [displayMode, setDisplayMode] = useState<string>(preSelectedTheme || 'dark');
+  const config = { method: 'Post', url: '/auth/refresh-token', withCredentials: true }
 
-  const [displayMode, setDisplayMode] = useState<modeType>('dark');
+  const cookies = new Cookies();
+  const [resData, error, errormessage, isLoading, sendRequest] = useAxiosRequestHelper<any>(config, false);
 
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     const refreshToken = cookies.get('RefreshToken');
+  //     console.log(cookies.get('RefreshToken'));
+  //     console.log(cookies.get('Authorization'));
+
+  //     sendRequest({ "token": refreshToken });
+  //   }, 60000);
+
+  // }, []);
 
 
 
   const darkTheme = createTheme({
     palette: {
-      mode: displayMode,
+      mode: displayMode as modeType | undefined,
     },
   });
 
@@ -60,3 +81,4 @@ function RootLayout({
 }
 
 export default RootLayout;
+

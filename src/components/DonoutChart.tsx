@@ -20,7 +20,7 @@ const DonoutChart = (props: donoutChartDataType) => {
 
 
     return (
-        <Paper elevation={3} sx={{ width: { xs: '100%', md: '39%' }, display: 'flex', alignItems: 'center' }} >
+        <Paper elevation={1} sx={{ width: { xs: '100%', md: '39%' }, display: 'flex', alignItems: 'center' }} >
             <PieChart
                 series={[
                     {

@@ -30,7 +30,7 @@ export const navLinks: PageLink[] = [
   },
   {
     title: "Calculators",
-    path: "",
+    path: "/calculators",
   },
 ];
 

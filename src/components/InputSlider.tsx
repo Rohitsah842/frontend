@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Slider, InputAdornment, FilledInput, FormControl, Typography } from '@mui/material'
 import { InputSliderprops } from '@/types/InputSliderProps';
+import { isArray } from 'lodash';
 
 const InputSlider = ({ isStartAdornment, isSliderHide = false, isDisable = false, ...props }: InputSliderprops) => {
 
@@ -27,7 +28,13 @@ const InputSlider = ({ isStartAdornment, isSliderHide = false, isDisable = false
                 aria-label="Default"
                 valueLabelDisplay="auto"
                 value={props.value}
-                onChange={props.onChangeSliderHandler}
+                onChange={(event: Event,
+                    value: number | number[],
+                    activeThumb: number) => {
+                    if (!isArray(value))
+                        props.onChangeSliderHandler && props.onChangeSliderHandler({ name: props.name, value: value })
+                }
+                }
                 step={props.stepSize}
                 min={props.min}
                 max={props.max}

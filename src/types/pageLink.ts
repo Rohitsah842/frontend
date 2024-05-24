@@ -4,5 +4,5 @@ export interface PageLink {
   onClickHandler?: (event: React.MouseEvent<HTMLElement>) => void;
   icon?: JSX.Element;
   bodyText?: string;
-  image?: any;
+  imgSrc?: any;
 }
